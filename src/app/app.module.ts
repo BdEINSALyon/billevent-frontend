@@ -5,16 +5,19 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {RouterModule, Routes} from "@angular/router";
 import {HelloWorldComponent} from './hello-world/hello-world.component';
+import { BilletterieComponent } from './billetterie/billetterie.component';
 
 
 const appRoutes: Routes = [
-    {path: '', component: HelloWorldComponent, pathMatch: 'full'}
+    {path: '', component: HelloWorldComponent, pathMatch: 'full'},
+    {path: 'billetterie/:id', component: BilletterieComponent, pathMatch: 'full'}
 ];
 
 @NgModule({
     declarations: [
         AppComponent,
-        HelloWorldComponent
+        HelloWorldComponent,
+        BilletterieComponent
     ],
     imports: [
         RouterModule.forRoot(
