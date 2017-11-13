@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import Organizer from "../../../../billevent/Organizer";
 
 @Component({
   selector: 'sidebar-organizer',
@@ -7,6 +8,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class SidebarOrganizerComponent implements OnInit {
+
+    @Input()
+    organizer: Organizer;
 
   constructor() { }
 
