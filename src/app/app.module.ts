@@ -6,6 +6,9 @@ import {AppComponent} from './app.component';
 import {RouterModule, Routes} from "@angular/router";
 import {HelloWorldComponent} from './hello-world/hello-world.component';
 import { BilletterieComponent } from './billetterie/billetterie.component';
+import { SidebarComponent } from './billetterie/sidebar/sidebar.component';
+import { SidebarEventComponent } from './billetterie/sidebar/event/event.component';
+import { SidebarOrganizerComponent } from './billetterie/sidebar/organizer/organizer.component';
 
 
 const appRoutes: Routes = [
@@ -17,7 +20,10 @@ const appRoutes: Routes = [
     declarations: [
         AppComponent,
         HelloWorldComponent,
-        BilletterieComponent
+        BilletterieComponent,
+        SidebarComponent,
+        SidebarEventComponent,
+        SidebarOrganizerComponent
     ],
     imports: [
         RouterModule.forRoot(

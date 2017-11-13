@@ -1,4 +1,5 @@
 import Product from './Product';
+import Organizer from "./Organizer";
 
 /**
  * Store Events retrieved from Server
@@ -10,8 +11,13 @@ export default class Event {
   id: number;
   name: string;
   description: string;
+  organizer: Organizer;
   products: Product[];
   logo_url: string;
+  start_time: Date;
+  end_time: Date;
+  website: string;
+  address: string;
 
   constructor(event) {
     if (typeof event === 'number') {
@@ -26,7 +32,12 @@ export default class Event {
       this.description = event.description;
       this.products = event.products ?
         event.products.map((product) => new Product(product)) : [];
-      this.logo_url = event.logo_url;
+      this.organizer = event.organizer ? new Organizer(event.organizer) : null;
+      this.start_time = new Date(event.start_time);
+      this.end_time = new Date(event.start_time);
+      this.website = event.website;
+      this.address = event.address;
+          this.logo_url = event.logo_url;
     }
   }
 

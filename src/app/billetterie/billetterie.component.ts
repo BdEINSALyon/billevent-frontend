@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import Event from '../../billevent/Event'
 
 @Component({
   selector: 'app-billetterie',
@@ -8,7 +9,24 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class BilletterieComponent implements OnInit {
 
-  constructor() { }
+  event: Event;
+
+  constructor() {
+      this.event = new Event({
+          id: 1,
+          name: "Gala XXII - INSA Lyon",
+          start_time: new Date(1518373800),
+          end_time: new Date(1518404400),
+          address: "49-50 Quai Rambaud\n69002 Lyon",
+          website: "http://gala.bde-insa-lyon.fr",
+          organizer: {
+            name: "BdE INSA Lyon",
+            address: "Thélème\n18 avenue des Arts\n69100 Villeurbanne",
+            phone: "+33472434914",
+            email: "contact@bde-insa-lyon.fr"
+          }
+      })
+  }
 
   ngOnInit() {
   }
