@@ -18,6 +18,7 @@ export default class Event {
   end_time: Date;
   website: string;
   address: string;
+  place: string;
 
   constructor(event) {
     if (typeof event === 'number') {
@@ -29,6 +30,7 @@ export default class Event {
     } else {
       this.id = event.id;
       this.name = event.name;
+      this.place = event.place;
       this.description = event.description;
       this.products = event.products ?
         event.products.map((product) => new Product(product)) : [];
@@ -41,4 +43,7 @@ export default class Event {
     }
   }
 
+}
+function getDate(time: Date) {
+    return time.toLocaleDateString();
 }
