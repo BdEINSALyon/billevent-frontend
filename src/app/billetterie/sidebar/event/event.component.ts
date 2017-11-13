@@ -17,4 +17,12 @@ export class SidebarEventComponent implements OnInit {
   ngOnInit() {
   }
 
+  joli(chaine: string) {
+    if (chaine.charAt(0)!= '0'){
+      return "0"+chaine;
+    }else {
+      return chaine;
+    }
+  }
+
 }

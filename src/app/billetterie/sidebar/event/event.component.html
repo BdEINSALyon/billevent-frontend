@@ -5,13 +5,12 @@
   <div class="panel-body">
     <h5>L'évènement :</h5>
     <p id="date">
-      <i class="fa fa-calendar"></i> 11/02/2018<br>
-      <i class="fa fa-clock-o"></i> 19h30 à 23h
+      <i class="fa fa-calendar"></i> {{joli(event.start_time.toLocaleDateString())}}<br>
+      <i class="fa fa-clock-o"></i> {{event.start_time.toLocaleTimeString()}} à {{event.end_time.toLocaleTimeString()}}
     </p>
     <div id="localisation">
-      <h5><i class="fa fa-map-marker"></i> La Sucrière</h5>
-      &nbsp; &nbsp; 49-50 Quai Rambaud
-      <br>&nbsp; &nbsp; 69002 Lyon
+      <h5><i class="fa fa-map-marker"></i> {{event.place}}</h5>
+      &nbsp;&nbsp;&nbsp;{{event.address}}
     </div>
     <p id="site">
       <i class="fa fa-globe"></i> <a href="gala.bde-insa-lyon.fr">gala.bde-insa-lyon.fr</a>
