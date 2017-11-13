@@ -29,7 +29,6 @@ export default class Product {
       this.price_ht = product.price_ht;
       this.price_ttc = product.price_ttc;
       this.rules = product.rules.map((rule) => new PricingRule(rule));
-      this.options = product.options.map((option) => new Option(option));
       this.questions = product.questions.map((question) => new Question(question));
       this.event = product.event ? new Event(product.event) : null;
     }

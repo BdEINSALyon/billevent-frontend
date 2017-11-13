@@ -7,18 +7,12 @@ import Event from './Event';
  */
 export default class Order {
 
-  id: number = null;
+  id: number = -1;
   client: Client | null;
   billets: Billet[] = [];
   event: Event;
 
-    constructor(response) {
-        this.id = response.id;
-        this.client = response.client ? new Client(response.client) : null;
-        this.event = new Event(response.event);
-        this.billets = response.billets ?
-            response.billets.map((billet) => new Billet(billet)) : [];
-    }
+    constructor() {}
 
     static load(event) {}
 
@@ -29,4 +23,14 @@ export default class Order {
         };
     }
 
+    /**
+     * Assign that Order to an event.
+     * @param {Event} event The event to assign
+     */
+    setEvent(event: Event) {
+        if(this.id !== -1) {
+            throw new Error("This order is already saved!");
+        }
+        this.event = event;
+    }
 }

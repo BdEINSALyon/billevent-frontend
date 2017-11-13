@@ -9,6 +9,14 @@ import { BilletterieComponent } from './billetterie/billetterie.component';
 import { SidebarComponent } from './billetterie/sidebar/sidebar.component';
 import { SidebarEventComponent } from './billetterie/sidebar/event/event.component';
 import { SidebarOrganizerComponent } from './billetterie/sidebar/organizer/organizer.component';
+import { ShopComponent } from './billetterie/shop/shop.component';
+import { CategoryComponent } from './billetterie/shop/category/category.component';
+import { ProductComponent } from './billetterie/shop/product/product.component';
+import { QuestionsComponent } from './billetterie/shop/questions/questions.component';
+import { PaymentComponent } from './billetterie/shop/payment/payment.component';
+import { ConfirmationComponent } from './billetterie/shop/confirmation/confirmation.component';
+import {HttpClientModule} from '@angular/common/http';
+import {BilleventApiService} from "./billevent-api.service";
 
 
 const appRoutes: Routes = [
@@ -23,16 +31,24 @@ const appRoutes: Routes = [
         BilletterieComponent,
         SidebarComponent,
         SidebarEventComponent,
-        SidebarOrganizerComponent
+        SidebarOrganizerComponent,
+        ShopComponent,
+        CategoryComponent,
+        ProductComponent,
+        QuestionsComponent,
+        PaymentComponent,
+        ConfirmationComponent
     ],
     imports: [
         RouterModule.forRoot(
-            appRoutes,
-            {enableTracing: true} // <-- debugging purposes only
+            appRoutes
         ),
-        BrowserModule
+        BrowserModule,
+        HttpClientModule
     ],
-    providers: [],
+    providers: [
+        BilleventApiService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

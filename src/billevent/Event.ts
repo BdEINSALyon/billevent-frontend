@@ -30,8 +30,6 @@ export default class Event {
       this.id = event.id;
       this.name = event.name;
       this.description = event.description;
-      this.products = event.products ?
-        event.products.map((product) => new Product(product)) : [];
       this.organizer = event.organizer ? new Organizer(event.organizer) : null;
       this.start_time = new Date(event.start_time);
       this.end_time = new Date(event.start_time);
@@ -40,5 +38,7 @@ export default class Event {
           this.logo_url = event.logo_url;
     }
   }
+
+
 
 }
