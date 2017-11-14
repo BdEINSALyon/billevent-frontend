@@ -18,7 +18,7 @@ export class BilletterieComponent implements OnInit {
           start_time: new Date(1518373800),
           end_time: new Date(1518404400),
           place: "La sucrière",
-          address: "49-50 Quai Rambaud\n69002 Lyon",
+          address: "49-50 Quai Rambaud\n &nbsp; 69002 Lyon",
           website: "http://gala.bde-insa-lyon.fr",
           organizer: {
             name: "BdE INSA Lyon",
