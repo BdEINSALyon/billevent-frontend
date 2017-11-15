@@ -6,15 +6,42 @@ import Event from '../billevent/Event';
 @Injectable()
 export class BilleventApiService {
 
-    server: string = "http://localhost:8000";
+    static server: string = "http://localhost:8000";
+    static DEV_LOGIN = {
+        login: 'bde',
+        password: 'insa'
+    };
+    static domains: string[] = ['localhost:8000'];
+    static TOKEN_STORAGE_KEY: string = 'auth_token';
 
     constructor(private http: HttpClient) {
     }
 
+    login(login: string, password: string): Observable<boolean>{
+        return Observable.create((obs) => {
+            this.http.post(BilleventApiService.server + "/api/authenticate", {username: login, password})
+                .subscribe(
+                    (data) => {
+                        localStorage.setItem(BilleventApiService.TOKEN_STORAGE_KEY, data['token']);
+                        obs.next(true);
+                        obs.complete();
+                    },
+                    (err) => {
+                        console.error(err);
+                        obs.next(false);
+                        obs.complete();
+                    }
+                )
+        })
+    }
+
     getEvent(id: number): Observable<Event> {
         return Observable.create((obs) => {
-            this.http.get((this.server + '/api/events/' + id + '/')).subscribe((result) => {
-                obs.next(result);
+            this.login('pvienne', 'vienne').subscribe();
+            this.http.get((BilleventApiService.server + '/api/events/' + id + '/'))
+
+                .subscribe((result) => {
+                obs.next(new Event(result));
                 console.log(result);
                 obs.complete();
             });

@@ -4,6 +4,7 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {RouterModule, Routes} from "@angular/router";
+import { JwtModule } from '@auth0/angular-jwt';
 import {HelloWorldComponent} from './hello-world/hello-world.component';
 import { BilletterieComponent } from './billetterie/billetterie.component';
 import { SidebarComponent } from './billetterie/sidebar/sidebar.component';
@@ -44,7 +45,16 @@ const appRoutes: Routes = [
             appRoutes
         ),
         BrowserModule,
-        HttpClientModule
+        HttpClientModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: () => {
+                    return localStorage.getItem(BilleventApiService.TOKEN_STORAGE_KEY);
+                },
+                whitelistedDomains: BilleventApiService.domains,
+                authScheme: 'JWT '
+            }
+        })
     ],
     providers: [
         BilleventApiService
