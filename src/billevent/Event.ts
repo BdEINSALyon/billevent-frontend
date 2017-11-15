@@ -36,8 +36,9 @@ export default class Event {
       this.start_time = new Date(event.start_time);
       this.end_time = new Date(event.start_time);
       this.website = event.website;
+      this.place = event.place;
       this.address = event.address;
-          this.logo_url = event.logo_url;
+      this.logo_url = event.logo_url;
     }
   }
 
