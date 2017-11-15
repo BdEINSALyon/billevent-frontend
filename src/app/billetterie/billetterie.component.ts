@@ -12,7 +12,7 @@ import {Observable} from "rxjs/Observable";
 })
 export class BilletterieComponent implements OnInit {
 
-  event: Observable<Event>;
+  event: Event;
 
   constructor(
       private route: ActivatedRoute,
