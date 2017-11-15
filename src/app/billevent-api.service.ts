@@ -8,8 +8,8 @@ export class BilleventApiService {
 
     static server: string = "http://localhost:8000";
     static DEV_LOGIN = {
-        login: 'bde',
-        password: 'insa'
+        login: 'pvienne',
+        password: 'vienne'
     };
     static domains: string[] = ['localhost:8000'];
     static TOKEN_STORAGE_KEY: string = 'auth_token';
@@ -17,7 +17,7 @@ export class BilleventApiService {
     constructor(private http: HttpClient) {
     }
 
-    login(login: string, password: string): Observable<boolean>{
+    login(login: string, password: string): Observable<boolean> {
         return Observable.create((obs) => {
             this.http.post(BilleventApiService.server + "/api/authenticate", {username: login, password})
                 .subscribe(
@@ -37,14 +37,21 @@ export class BilleventApiService {
 
     getEvent(id: number): Observable<Event> {
         return Observable.create((obs) => {
-            this.login('pvienne', 'vienne').subscribe();
-            this.http.get((BilleventApiService.server + '/api/events/' + id + '/'))
+            this.login(BilleventApiService.DEV_LOGIN.login, BilleventApiService.DEV_LOGIN.password).subscribe(
+                (result) => {
+                    if (!result) {
+                        obs.error(new Error("Login has failed"))
+                    } else {
+                        this.http.get((BilleventApiService.server + '/api/events/' + id + '/'))
+                            .subscribe((result) => {
+                                obs.next(new Event(result));
+                                console.log(result);
+                                obs.complete();
+                            });
 
-                .subscribe((result) => {
-                obs.next(new Event(result));
-                console.log(result);
-                obs.complete();
-            });
+                    }
+                }
+            );
         });
     }
 
