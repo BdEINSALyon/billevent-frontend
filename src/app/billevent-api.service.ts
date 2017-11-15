@@ -15,6 +15,7 @@ export class BilleventApiService {
         return Observable.create((obs) => {
             this.http.get((this.server + '/api/events/' + id + '/')).subscribe((result) => {
                 obs.next(result);
+                console.log(result);
                 obs.complete();
             });
         });

@@ -2,7 +2,6 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import Event from '../../billevent/Event'
 import {ActivatedRoute} from "@angular/router";
 import {BilleventApiService} from "../billevent-api.service";
-import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-billetterie',
@@ -26,6 +25,6 @@ export class BilletterieComponent implements OnInit {
 
     loadEvent() {
         const id: number = +this.route.snapshot.paramMap.get('id');
-        this.event = this.billeventApi.getEvent(id);
+        this.billeventApi.getEvent(id).subscribe((e) => this.event = e);
     }
 }
