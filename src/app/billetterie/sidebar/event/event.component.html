@@ -10,13 +10,13 @@
     </p>
     <div id="localisation">
       <h5><i class="fa fa-map-marker"></i> {{event.place}}</h5>
-      &nbsp;&nbsp;&nbsp;{{event.address}}
+      &nbsp;&nbsp;&nbsp;{{event.mapUrl}}
     </div>
     <p id="site">
       <i class="fa fa-globe"></i> <a href={{event.website}}>{{event.website}}</a>
     </p>
     <div id="carte">
-      <iframe width="100%" height="240" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAAHbywGkYMC2TUNDiDc7do8xqtyTclLD8&amp;q=50%2C+quai+Rambaud%2C69002+LYON" ></iframe>
+      <iframe width="100%" height="240" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" [src]="mapUrl()" ></iframe>
     </div>
   </div>
 

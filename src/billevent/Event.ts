@@ -19,6 +19,7 @@ export default class Event {
   website: string;
   address: string;
   place: string;
+  mapUrl: string;
 
   constructor(event) {
     if (typeof event === 'number') {
@@ -39,6 +40,7 @@ export default class Event {
       this.place = event.place;
       this.address = event.address;
       this.logo_url = event.logo_url;
+      this.mapUrl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAAHbywGkYMC2TUNDiDc7do8xqtyTclLD8&q="+event.address;
     }
   }
 
