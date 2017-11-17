@@ -12,11 +12,12 @@ export class ShopComponent implements OnInit {
 
     @Input()
     event: Event;
-
     order: Order;
+    step: number;
 
 
     constructor() {
+    this.step = 0;
     }
 
     ngOnInit() {

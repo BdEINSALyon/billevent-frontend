@@ -1,3 +1,70 @@
-<p>
-  confirmation works!
-</p>
+<div id="product_1" class="paddingtmtc">
+  <ul class="list-group">
+    <!-- A boucler pour le nombre de catégories -->
+    <div ng-repeat="i in [0,1,2]"> <!-- Ca marche pas :( -->
+      <li class="list-group-item list-group-item-dark">
+        Options
+      </li>
+
+      <li class="list-group-item font-weight-bold">
+        <div class="row">
+          <div class="col-4">
+            Type
+          </div>
+          <div class="col-4">
+            Prix
+          </div>
+          <div class="col-4">
+            Quantité
+          </div>
+        </div>
+      </li>
+      <!-- A boucler pour le nombre de produits dans une catégorie -->
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-4">
+            Arrivée en Peniche
+          </div>
+          <div class="col-4">
+            36 €
+          </div>
+          <div class="col-4">
+            <select class="form-control">
+              <option *ngFor="let i of [0,1,2,3,4,5]">{{i}}</option>
+            </select>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-4">
+            Cravate
+          </div>
+          <div class="col-4">
+            10 €
+          </div>
+          <div class="col-4">
+            <select class="form-control" (change)="checkAmount(product)">
+              <option *ngFor="let i of [0,1,2,3,4,5]">{{i}}</option>
+            </select>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-4">
+            Bouteille de Champagne
+          </div>
+          <div class="col-4">
+            30 €
+          </div>
+          <div class="col-4">
+            <select class="form-control">
+              <option *ngFor="let i of [0,1,2,3,4,5]">{{i}}</option>
+            </select>
+          </div>
+        </div>
+      </li>
+    </div>
+  </ul>
+</div>

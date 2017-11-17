@@ -1,14 +1,14 @@
 <div id="billeterie" class="jumbotron-main">
-  <div id="category">
+  <div *ngIf="step === 0" id="category" >
     <app-category></app-category>
   </div>
-  <div id="confirmation">
+  <div *ngIf="step === 1" id="confirmation">
     <app-confirmation></app-confirmation>
   </div>
-  <div id="payment">
+  <div *ngIf="step === 2" id="payment">
     <app-payment></app-payment>
   </div>
   <div id="next" align="right" class="paddingbtn">
-    <button type="button" class="btn btn-primary">Suivant</button>
+    <button type="button" *ngIf="step>0" class="btn btn-primary" (click)="step = step - 1">Retour</button> <button type="button" *ngIf="step<2" class="btn btn-primary" (click)="step = step + 1">Suivant</button>
   </div>
 </div>
