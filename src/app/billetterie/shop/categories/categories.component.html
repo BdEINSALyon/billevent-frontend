@@ -20,16 +20,16 @@
                 </div>
             </div>
             <!-- A boucler pour le nombre de produits dans une catégorie -->
-            <div class="list-group-item" *ngFor="let p of cat.products">
+            <div class="list-group-item" *ngFor="let product of cat.products">
                 <div class="row">
                     <div class="col-4">
-                        {{p.name}}
+                        {{product.name}}
                     </div>
                     <div class="col-4">
-                        {{p.price_ttc | currency:'EUR':'symbol-narrow':'.2-2'}}
+                        {{product.price_ttc | currency:'EUR':'symbol-narrow':'1.2-2'}}
                     </div>
                     <div class="col-4">
-                        <select class="form-control">
+                        <select class="form-control" (change)="updateCount(product, $event)" [(ngModel)]="order.selectionsCount[product.id]">
                             <option *ngFor="let i of [0,1,2,3,4,5]">{{i}}</option>
                         </select>
                     </div>

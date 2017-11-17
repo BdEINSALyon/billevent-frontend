@@ -1,20 +1,25 @@
 import Client from './Client';
 import Billet from './Billet';
 import Event from './Event';
+import Product from "./Product";
 
 /**
  * Gestionaire d'une commande
  */
 export default class Order {
 
-  id: number = -1;
-  client: Client | null;
-  billets: Billet[] = [];
-  event: Event;
+    id: number = -1;
+    client: Client | null;
+    billets: Billet[] = [];
+    event: Event;
 
-    constructor() {}
+    selectionsCount: Map<number, number> = new Map();
 
-    static load(event) {}
+    constructor() {
+    }
+
+    static load(event) {
+    }
 
     toJson() {
         return {
@@ -28,7 +33,7 @@ export default class Order {
      * @param {Event} event The event to assign
      */
     setEvent(event: Event) {
-        if(this.id !== -1) {
+        if (this.id !== -1) {
             throw new Error("This order is already saved!");
         }
         this.event = event;

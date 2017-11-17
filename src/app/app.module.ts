@@ -20,6 +20,7 @@ import { ConfirmationComponent } from './billetterie/shop/confirmation/confirmat
 import {HttpClientModule} from '@angular/common/http';
 import {BilleventApiService} from "./billevent-api.service";
 import {registerLocaleData} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 registerLocaleData(localeFr);
 
@@ -57,7 +58,8 @@ const appRoutes: Routes = [
                 whitelistedDomains: BilleventApiService.domains,
                 authScheme: 'JWT '
             }
-        })
+        }),
+        FormsModule
     ],
     providers: [
         BilleventApiService,
