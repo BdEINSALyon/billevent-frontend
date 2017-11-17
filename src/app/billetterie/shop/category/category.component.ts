@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import Category from '../../../../billevent/Category';
 
 @Component({
   selector: 'app-category',
@@ -8,9 +9,22 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class CategoryComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  category: Category;
+  categories: String[];
+  lenght: number;
+
+  constructor() {
+    this.categories=["Pack Soirée", "Pack Nuitée", "Pack Week-End"];
+    this.lenght=this.categories.length;
+  }
 
   ngOnInit() {
+    console.log(this.categories);
+  }
+
+  checkAmount(product){
+    console.log("46546")
   }
 
 }

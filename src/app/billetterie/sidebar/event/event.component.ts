@@ -14,7 +14,8 @@ export class SidebarEventComponent implements OnInit {
   event: Event;
   url: SafeResourceUrl;
 
-  constructor(public sanitizer:DomSanitizer) { }
+  constructor(public sanitizer:DomSanitizer) {
+  }
 
   ngOnInit() {
   }

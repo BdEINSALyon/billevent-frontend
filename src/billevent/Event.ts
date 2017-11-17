@@ -1,4 +1,4 @@
-import Product from './Product';
+// import Product from './Product';
 import Organizer from "./Organizer";
 
 /**
@@ -12,7 +12,7 @@ export default class Event {
   name: string;
   description: string;
   organizer: Organizer;
-  products: Product[];
+  // products: Product[];
   logo_url: string;
   start_time: Date;
   end_time: Date;
