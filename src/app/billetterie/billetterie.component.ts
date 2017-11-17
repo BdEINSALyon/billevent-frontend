@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import Event from '../../billevent/Event'
-import Category from '../../billevent/Category'
+import Event from '../../billevent/Event';
+import Category from '../../billevent/Category';
+import Product from '../../billevent/Product';
 import {ActivatedRoute} from "@angular/router";
 import {BilleventApiService} from "../billevent-api.service";
 
@@ -14,6 +15,7 @@ export class BilletterieComponent implements OnInit {
 
   event: Event;
   category: Category[];
+  product: Product[];
 
   constructor(
       private route: ActivatedRoute,
@@ -39,7 +41,7 @@ export class BilletterieComponent implements OnInit {
     }
 
     loadProduct(){
-        this.billeventApi.getCategories(+this.route.snapshot.paramMap.get('id')).subscribe((f) => this.category = f);
+        this.billeventApi.getProduct(+this.route.snapshot.paramMap.get('id')).subscribe((g) => this.product = g);
         console.log(this.category);
     }
 }

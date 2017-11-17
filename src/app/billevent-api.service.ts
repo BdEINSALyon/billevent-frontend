@@ -61,10 +61,10 @@ export class BilleventApiService {
         });
     }
 
-    getProduct(id: number): Observable<Product> {
+    getProduct(id: number): Observable<Product[]> {
         return Observable.create((obs) => {
-            this.http.get((BilleventApiService.server + '/api/products/' + id + '/'))
-                .subscribe((result) => {
+            this.http.get((BilleventApiService.server + '/api/products/?event=' + id))
+                .subscribe((result: any[]) => {
                     obs.next(new Product(result));
                     console.log(result);
                     obs.complete();
