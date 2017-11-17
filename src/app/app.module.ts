@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 
+import localeFr from '@angular/common/locales/fr';
 
 import {AppComponent} from './app.component';
 import {RouterModule, Routes} from "@angular/router";
@@ -11,14 +12,16 @@ import { SidebarComponent } from './billetterie/sidebar/sidebar.component';
 import { SidebarEventComponent } from './billetterie/sidebar/event/event.component';
 import { SidebarOrganizerComponent } from './billetterie/sidebar/organizer/organizer.component';
 import { ShopComponent } from './billetterie/shop/shop.component';
-import { CategoryComponent } from './billetterie/shop/category/category.component';
+import { CategoriesComponent } from './billetterie/shop/categories/categories.component';
 import { ProductComponent } from './billetterie/shop/product/product.component';
 import { QuestionsComponent } from './billetterie/shop/questions/questions.component';
 import { PaymentComponent } from './billetterie/shop/payment/payment.component';
 import { ConfirmationComponent } from './billetterie/shop/confirmation/confirmation.component';
 import {HttpClientModule} from '@angular/common/http';
 import {BilleventApiService} from "./billevent-api.service";
+import {registerLocaleData} from "@angular/common";
 
+registerLocaleData(localeFr);
 
 const appRoutes: Routes = [
     {path: '', component: HelloWorldComponent, pathMatch: 'full'},
@@ -34,7 +37,7 @@ const appRoutes: Routes = [
         SidebarEventComponent,
         SidebarOrganizerComponent,
         ShopComponent,
-        CategoryComponent,
+        CategoriesComponent,
         ProductComponent,
         QuestionsComponent,
         PaymentComponent,
@@ -57,7 +60,8 @@ const appRoutes: Routes = [
         })
     ],
     providers: [
-        BilleventApiService
+        BilleventApiService,
+        {provide: LOCALE_ID, useValue: 'fr'}
     ],
     bootstrap: [AppComponent]
 })

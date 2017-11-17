@@ -1,0 +1,40 @@
+<div id="product_1" class="paddingtmtc">
+    <!-- A boucler pour le nombre de catégories -->
+    <div *ngFor="let cat of categories">
+        <div *ngIf="cat.products.size > 0">
+            <div class="list-group-item list-group-item-dark">
+                {{cat.name}}
+            </div>
+
+            <div class="list-group-item font-weight-bold">
+                <div class="row">
+                    <div class="col-4">
+                        Type
+                    </div>
+                    <div class="col-4">
+                        Prix
+                    </div>
+                    <div class="col-4">
+                        Quantité
+                    </div>
+                </div>
+            </div>
+            <!-- A boucler pour le nombre de produits dans une catégorie -->
+            <div class="list-group-item" *ngFor="let p of cat.products">
+                <div class="row">
+                    <div class="col-4">
+                        {{p.name}}
+                    </div>
+                    <div class="col-4">
+                        {{p.price_ttc | currency:'EUR':'symbol-narrow':'.2-2'}}
+                    </div>
+                    <div class="col-4">
+                        <select class="form-control">
+                            <option *ngFor="let i of [0,1,2,3,4,5]">{{i}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 <div id="billeterie" class="jumbotron-main">
   <div *ngIf="step === 0" id="category" >
-    <app-category></app-category>
+    <app-categories [order] = "order"></app-categories>
   </div>
   <div *ngIf="step === 1" id="confirmation">
     <app-confirmation></app-confirmation>

@@ -80,11 +80,8 @@ export class BilleventApiService {
                     const category = [];
                     for(let i=0; i<result.length; i++) {
                         category.push(new Category(result[i]));
-                        // console.log(category); //Used for debug purposes
                     }
                     obs.next(category);
-                    console.log(result);
-                    console.log(category);
                     obs.complete();
                 });
 

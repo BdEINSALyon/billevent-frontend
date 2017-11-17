@@ -17,7 +17,7 @@ export class ShopComponent implements OnInit {
 
 
     constructor() {
-    this.step = 0;
+        this.step = 0;
     }
 
     ngOnInit() {

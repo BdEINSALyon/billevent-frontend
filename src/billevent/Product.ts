@@ -15,9 +15,9 @@ export default class Product {
   name: string;
   price_ht: number;
   price_ttc: number;
-  options: Option[];
-  rules: PricingRule[];
-  questions: Question[];
+  options: Option[] = [];
+  rules: PricingRule[] = [];
+  questions: Question[] = [];
   event: Event;
 
   constructor(product) {
