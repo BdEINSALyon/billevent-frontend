@@ -27,9 +27,10 @@ export class CategoriesComponent implements OnInit {
     this.api.getCategories(this.order.event.id).subscribe(
         (categories) => {
           this.categories = new Set(categories);
+          this.order.categories = this.categories;
           this.categories.forEach((cat) => {
             cat.products.forEach((product) => {
-              this.order.selectionsCount[product.id] = 0;
+              this.order.productsCount[product.id] = 0;
             })
           })
         },
@@ -46,7 +47,11 @@ export class CategoriesComponent implements OnInit {
   updateCount(product: Product, $event: Event){
     const count = parseInt((<HTMLSelectElement>$event.target).value);
     console.log("Update " + product.id + "-" + product.name + " to "+count);
-    this.order.selectionsCount[product.id] = count;
+    this.order.productsCount[product.id] = count;
   }
+
+    getTotalPrice(){
+      return this.order.getPriceTTC();
+    }
 
 }

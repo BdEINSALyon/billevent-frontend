@@ -2,6 +2,7 @@ import Client from './Client';
 import Billet from './Billet';
 import Event from './Event';
 import Product from "./Product";
+import Category from "./Category";
 
 /**
  * Gestionaire d'une commande
@@ -13,7 +14,8 @@ export default class Order {
     billets: Billet[] = [];
     event: Event;
 
-    selectionsCount: Map<number, number> = new Map();
+    productsCount: Map<number, number> = new Map();
+    categories: Set<Category>;
 
     constructor() {
     }
@@ -37,5 +39,33 @@ export default class Order {
             throw new Error("This order is already saved!");
         }
         this.event = event;
+    }
+
+    getPriceTTC() {
+        if(this.categories) {
+            let total = 0.0;
+            this.categories.forEach((cat) => {
+                cat.products.forEach((product) => {
+                    total += this.productsCount[product.id] * product.price_ttc;
+                })
+            });
+            return total;
+        } else {
+            return 0;
+        }
+    }
+
+    getPriceHT() {
+        if(this.categories) {
+            let total = 0.0;
+            this.categories.forEach((cat) => {
+                cat.products.forEach((product) => {
+                    total += this.productsCount[product.id] * product.price_ht;
+                })
+            });
+            return total;
+        } else {
+            return 0;
+        }
     }
 }
