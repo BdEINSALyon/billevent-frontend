@@ -13,11 +13,16 @@ export class SidebarEventComponent implements OnInit {
   @Input()
   event: Event;
   url: SafeResourceUrl;
+  private gmap: SafeResourceUrl;
 
   constructor(public sanitizer:DomSanitizer) {
   }
 
   ngOnInit() {
+    if(this.event)
+    this.gmap = this.sanitizer.bypassSecurityTrustResourceUrl(
+        "https://www.google.com/maps/embed/v1/place?key=AIzaSyAAHbywGkYMC2TUNDiDc7do8xqtyTclLD8&q=" + this.event.address
+    );
   }
 
   joli(chaine: string) {
@@ -26,12 +31,6 @@ export class SidebarEventComponent implements OnInit {
     }else {
       return chaine;
     }
-  }
-
-  mapUrl(){
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-        "https://www.google.com/maps/embed/v1/place?key=AIzaSyAAHbywGkYMC2TUNDiDc7do8xqtyTclLD8&q=" + this.event.address
-    );
   }
 
 }
