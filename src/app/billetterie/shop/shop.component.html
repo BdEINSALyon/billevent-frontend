@@ -3,7 +3,7 @@
     <app-categories [order] = "order"></app-categories>
   </div>
   <div *ngIf="step === 1" id="confirmation">
-    <app-confirmation></app-confirmation>
+    <app-confirmation [order] = "order"></app-confirmation>
   </div>
   <div *ngIf="step === 2" id="payment">
     <app-payment></app-payment>

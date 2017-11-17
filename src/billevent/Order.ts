@@ -16,6 +16,7 @@ export default class Order {
 
     productsCount: Map<number, number> = new Map();
     categories: Set<Category>;
+    state: number;
 
     constructor() {
     }
