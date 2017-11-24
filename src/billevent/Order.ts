@@ -3,6 +3,7 @@ import Billet from './Billet';
 import Event from './Event';
 import Product from "./Product";
 import Category from "./Category";
+import PricingRule from "./PricingRule";
 
 /**
  * Gestionaire d'une commande
@@ -16,9 +17,50 @@ export default class Order {
 
     productsCount: Map<number, number> = new Map();
     categories: Set<Category>;
-    state: number;
+    state: number = 0;
 
     constructor() {
+    }
+
+    /**
+     * Update quantity of Billet to match to a Product amount
+     * @returns {Promise<boolean>}
+     */
+    updateBillet(){
+        return new Promise((resolve, reject) => {
+            if(this.state <= 1){
+                let billets = [];
+                let rules: Set<PricingRule> = new Set();
+                this.categories.forEach((cat) => {
+                    cat.products.forEach((product) => {
+                        for(let i=0; i < this.productsCount[product.id]; i++) {
+                            billets.push(new Billet({product}));
+                            for (let rule of product.rules) {
+                                rules.add(rule);
+                            }
+                        }
+                    })
+                });
+                const oldBillets = this.billets;
+                this.billets = billets;
+                let rulesCheckPromises = [];
+                rules.forEach((rule) => {
+                    rulesCheckPromises.push(rule.validate(this));
+                });
+                Promise.all(rulesCheckPromises).then(
+                    () => {
+                        resolve();
+                    },
+                    (error) => {
+                        this.billets = oldBillets;
+                        reject(error);
+                    }
+                );
+                console.log(billets)
+            } else {
+                reject();
+            }
+        });
     }
 
     static load(event) {
@@ -68,5 +110,17 @@ export default class Order {
         } else {
             return 0;
         }
+    }
+
+    private getProduct(id){
+        let p = null;
+        this.categories.forEach((cat) => {
+            cat.products.forEach((product) => {
+                if(product.id === id){
+                    p = product;
+                }
+            })
+        });
+        return p;
     }
 }
