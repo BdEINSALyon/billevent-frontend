@@ -31,7 +31,6 @@ export class CategoriesComponent implements OnInit {
                         this.order.productsCount[product.id] = 0;
                     })
                 });
-                console.log(this.categories);
             },
             (err) => {
                 console.error(err);

@@ -1,47 +1,47 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import Event from '../../billevent/Event';
 import Category from '../../billevent/Category';
 import Product from '../../billevent/Product';
 import {ActivatedRoute} from "@angular/router";
 import {BilleventApiService} from "../billevent-api.service";
+import {Observable} from "rxjs/Observable";
 
 @Component({
-  selector: 'app-billetterie',
-  templateUrl: './billetterie.component.html',
-  styleUrls: ['./billetterie.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-billetterie',
+    templateUrl: './billetterie.component.html',
+    styleUrls: ['./billetterie.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class BilletterieComponent implements OnInit {
 
-  event: Event;
-  category: Category[];
-  product: Product[];
+    state = "loading";
 
-  constructor(
-      private route: ActivatedRoute,
-      private billeventApi: BilleventApiService
-  ) {
-  }
+    event: Event;
+    category: Category[];
+    product: Product[];
 
-  ngOnInit() {
-      this.loadEvent();
-      this.loadCategory();
-      this.loadProduct();
-  }
+    constructor(private route: ActivatedRoute,
+                private billeventApi: BilleventApiService) {
+    }
+
+    ngOnInit() {
+        this.loadEvent();
+    }
 
     loadEvent() {
         const id: number = +this.route.snapshot.paramMap.get('id');
-        this.billeventApi.getEvent(id).subscribe((e) => this.event = e);
-        console.log(this.event);
-    }
-
-    loadCategory() {
-        this.billeventApi.getCategories(+this.route.snapshot.paramMap.get('id')).subscribe((f) => this.category = f);
-        console.log(this.category);
-    }
-
-    loadProduct(){
-        this.billeventApi.getProduct(+this.route.snapshot.paramMap.get('id')).subscribe((g) => this.product = g);
-        console.log(this.category);
+        this.billeventApi.getEvent(id).subscribe(
+            (e) => {
+                this.event = e;
+                Observable.forkJoin(
+                    this.billeventApi.getCategories(id).subscribe((f) => this.category = f),
+                    this.billeventApi.getProduct(id).subscribe((g) => this.product = g)
+                );
+                this.state = "success"
+            },
+            (error) => {
+                this.state = "failed"
+            }
+        );
     }
 }

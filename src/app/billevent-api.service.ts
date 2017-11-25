@@ -24,7 +24,7 @@ export class BilleventApiService {
     constructor(private http: HttpClient) {
     }
 
-    loginByToken(token: string): Observable<Invitation>{
+    loginByToken(token: string): Observable<Invitation> {
         return Observable.create((obs) => {
             this.http.post(BilleventApiService.server + "/api/authenticate/invitation", {token})
                 .subscribe(
@@ -61,50 +61,28 @@ export class BilleventApiService {
     }
 
     getEvent(id: number): Observable<Event> {
-        return Observable.create((obs) => {
-            this.login(BilleventApiService.DEV_LOGIN.login, BilleventApiService.DEV_LOGIN.password).subscribe(
-                (result) => {
-                    if (!result) {
-                        obs.error(new Error("Login has failed"))
-                    } else {
-                        this.http.get((BilleventApiService.server + '/api/events/' + id + '/'))
-                            .subscribe((result) => {
-                                obs.next(new Event(result));
-                                console.log(result);
-                                obs.complete();
-                            });
-
-                    }
-                }
-            );
-        });
+        return this.http.get((BilleventApiService.server + '/api/events/' + id + '/'))
+            .map((result) => {
+                return new Event(result);
+            });
     }
 
     getProduct(id: number): Observable<Product[]> {
-        return Observable.create((obs) => {
-            this.http.get((BilleventApiService.server + '/api/products/?event=' + id))
-                .subscribe((result: any[]) => {
-                    obs.next(new Product(result));
-                    console.log(result);
-                    obs.complete();
+        return this.http.get((BilleventApiService.server + '/api/products/?event=' + id))
+                .map((result: any[]) => {
+                    return result.map((p) => new Product(p));
                 });
-
-        });
     }
 
     getCategories(id: number): Observable<Category[]> {
-        return Observable.create((obs) => {
-            this.http.get((BilleventApiService.server + '/api/events/' + id + '/categorie/'))
-                .subscribe((result: Category[]) => {
+        return this.http.get((BilleventApiService.server + '/api/events/' + id + '/categorie/'))
+                .map((result: Category[]) => {
                     const category = [];
-                    for(let i=0; i<result.length; i++) {
+                    for (let i = 0; i < result.length; i++) {
                         category.push(new Category(result[i]));
                     }
-                    obs.next(category);
-                    obs.complete();
+                    return result.map((c) => new Category(c));
                 });
-
-        });
     }
 
 
