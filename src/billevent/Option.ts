@@ -14,7 +14,6 @@ export default class Option {
   price_ht: number;
   price_ttc: number;
   rules: PricingRule[];
-  questions: Question[];
   event: Event;
   seats: number;
 
@@ -27,7 +26,6 @@ export default class Option {
       this.price_ht = option.price_ht;
       this.price_ttc = option.price_ttc;
       this.rules = option.rules.map((rule) => new PricingRule(rule));
-      this.questions = option.questions.map((question) => new Question(question));
       this.event = option.event ? new Event(option.event) : null;
       this.seats = option.seats || 1;
       options[option.id] = this;

@@ -41,6 +41,7 @@ export default class Event {
       this.address = event.address;
       this.logo_url = event.logo_url;
       this.mapUrl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAAHbywGkYMC2TUNDiDc7do8xqtyTclLD8&q="+event.address;
+      events[this.id] = this;
     }
   }
 

@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Observable";
 import Event from '../billevent/Event';
 import Product from "../billevent/Product";
 import Category from "../billevent/Category";
+import {Invitation} from "../billevent/Invitation";
 
 @Injectable()
 export class BilleventApiService {
@@ -21,6 +22,24 @@ export class BilleventApiService {
     static TOKEN_STORAGE_KEY: string = 'auth_token';
 
     constructor(private http: HttpClient) {
+    }
+
+    loginByToken(token: string): Observable<Invitation>{
+        return Observable.create((obs) => {
+            this.http.post(BilleventApiService.server + "/api/authenticate/invitation", {token})
+                .subscribe(
+                    (data) => {
+                        localStorage.setItem(BilleventApiService.TOKEN_STORAGE_KEY, data['jwt']);
+                        obs.next(new Invitation(data['invitation']));
+                        console.log(data);
+                        obs.complete();
+                    },
+                    (err) => {
+                        obs.error(err);
+                    }
+                )
+
+        })
     }
 
     login(login: string, password: string): Observable<boolean> {

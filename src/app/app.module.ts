@@ -21,12 +21,15 @@ import {HttpClientModule} from '@angular/common/http';
 import {BilleventApiService} from "./billevent-api.service";
 import {registerLocaleData} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import { InvitationTokenComponent } from './invitation-token/invitation-token.component';
+import { SpinnerComponent } from './utils/spinner/spinner.component';
 
 registerLocaleData(localeFr);
 
 const appRoutes: Routes = [
     {path: '', component: HelloWorldComponent, pathMatch: 'full'},
-    {path: 'billetterie/:id', component: BilletterieComponent, pathMatch: 'full'}
+    {path: 'billetterie/:id', component: BilletterieComponent, pathMatch: 'full'},
+    {path: 'invitation/:token', component: InvitationTokenComponent, pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -42,7 +45,9 @@ const appRoutes: Routes = [
         ProductComponent,
         QuestionsComponent,
         PaymentComponent,
-        ConfirmationComponent
+        ConfirmationComponent,
+        InvitationTokenComponent,
+        SpinnerComponent
     ],
     imports: [
         RouterModule.forRoot(
