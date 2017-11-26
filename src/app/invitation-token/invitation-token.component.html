@@ -1,7 +1,7 @@
 <div id="invitation-welcome">
   <div *ngIf="state === 'loading'">
-
     <div class="loadingAnimation">
+
       <spinner></spinner>
       <h2>Chargement de votre espace ...</h2>
     </div>
@@ -16,7 +16,7 @@
   </div>
   <div *ngIf="state === 'success'">
       <div class="message">
-        <h1>Bienvenu {{invitation.client.first_name}}</h1>
+        <h1>Bienvenue {{invitation.client.first_name + " " + invitation.client.last_name}}</h1>
         <a [routerLink]="'/billetterie/' + invitation.event.id" class="btn btn-primary">Entrez dans la billetterie</a>
       </div>
   </div>
