@@ -1,14 +1,20 @@
 <div id="billeterie" class="jumbotron-main">
-  <div *ngIf="step === 0" id="category" >
-    <app-categories [order] = "order"></app-categories>
-  </div>
-  <div *ngIf="step === 1" id="confirmation">
-    <app-confirmation [order] = "order"></app-confirmation>
-  </div>
-  <div *ngIf="step === 2" id="payment">
-    <app-payment></app-payment>
-  </div>
-  <div id="next" align="right" class="paddingbtn">
-    <button type="button" *ngIf="step>0" class="btn btn-primary" (click)="step = step - 1">Retour</button> <button type="button" *ngIf="step<2" class="btn btn-primary" (click)="step = step + 1">Suivant</button>
-  </div>
+    <div class="loader" *ngIf="loading">
+        <div class="loadingAnimation">
+            <spinner></spinner>
+            <h2>Chargement ...</h2>
+        </div>
+    </div>
+    <div class="shop" *ngIf="!loading">
+        <div *ngIf="step === 0" id="category">
+            <app-categories [order]="order"></app-categories>
+        </div>
+        <div *ngIf="step === 1" id="payment">
+            <app-payment [order]="order"></app-payment>
+        </div>
+        <div id="next" align="right" class="paddingbtn">
+            <button type="button" *ngIf="canBack()" class="btn btn-primary" (click)="back()">Retour</button>
+            <button type="button" *ngIf="canNext()" class="btn btn-primary" (click)="next()">Suivant</button>
+        </div>
+    </div>
 </div>

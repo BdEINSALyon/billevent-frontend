@@ -33,10 +33,6 @@ export class BilletterieComponent implements OnInit {
         this.billeventApi.getEvent(id).subscribe(
             (e) => {
                 this.event = e;
-                Observable.forkJoin(
-                    this.billeventApi.getCategories(id).subscribe((f) => this.category = f),
-                    this.billeventApi.getProduct(id).subscribe((g) => this.product = g)
-                );
                 this.state = "success"
             },
             (error) => {

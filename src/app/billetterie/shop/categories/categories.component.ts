@@ -38,10 +38,6 @@ export class CategoriesComponent implements OnInit {
         );
     }
 
-    checkAmount(product) {
-
-    }
-
     updateCount(product: Product, $event: Event) {
         const count = parseInt((<HTMLSelectElement>$event.target).value);
         console.log("Update " + product.id + "-" + product.name + " to " + count);

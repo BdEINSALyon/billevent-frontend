@@ -18,19 +18,21 @@ import { CategoriesComponent } from './billetterie/shop/categories/categories.co
 import { ProductComponent } from './billetterie/shop/product/product.component';
 import { QuestionsComponent } from './billetterie/shop/questions/questions.component';
 import { PaymentComponent } from './billetterie/shop/payment/payment.component';
-import { ConfirmationComponent } from './billetterie/shop/confirmation/confirmation.component';
+import { ConfirmationComponent } from './billetterie/confirmation/confirmation.component';
 import {HttpClientModule} from '@angular/common/http';
 import {BilleventApiService} from "./billevent-api.service";
 import {registerLocaleData} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import { InvitationTokenComponent } from './invitation-token/invitation-token.component';
 import { SpinnerComponent } from './utils/spinner/spinner.component';
+import {ShopManagerService} from "./billetterie/shop-manager.service";
 
 registerLocaleData(localeFr);
 
 const appRoutes: Routes = [
     {path: '', component: HelloWorldComponent, pathMatch: 'full'},
     {path: 'billetterie/:id', component: BilletterieComponent, pathMatch: 'full'},
+    {path: 'billetterie/:id/payment/:order', component: ConfirmationComponent, pathMatch: 'full'},
     {path: 'invitation/:token', component: InvitationTokenComponent, pathMatch: 'full'}
 ];
 
@@ -70,6 +72,7 @@ const appRoutes: Routes = [
     ],
     providers: [
         BilleventApiService,
+        ShopManagerService,
         {provide: LOCALE_ID, useValue: 'fr'}
     ],
     bootstrap: [AppComponent]

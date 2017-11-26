@@ -1,0 +1,45 @@
+<div id="confirmation" class="container">
+  <div *ngIf="state === 'loading'">
+
+    <div class="loadingAnimation">
+      <spinner></spinner>
+      <h2>Chargement ...</h2>
+    </div>
+
+  </div>
+  <div *ngIf="state === 'failed'">
+    <div class="message">
+      <h1>Erreur</h1>
+      <div class="text-danger">Impossible de charger la billetterie</div>
+    </div>
+
+  </div>
+  <div *ngIf="state === 'success' && event">
+
+    <div id="topbar" class="jumbotron-top">
+      <h1><img src="http://logos.bde-insa-lyon.fr/bde/bde_70px.png" height="50" width="40"> Billevent</h1>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <app-sidebar [event]="event"></app-sidebar>
+      </div>
+
+      <div class="col-8">
+        <div class="paddingtmtc">
+          <div class="row mt-4">
+            <div class="col-md-4 text-right">
+
+              <img src="/assets/ok.png">
+            </div>
+            <div class="col-md-8">
+              <h5 class="mt-5 text-success">Paiement validé, les billets sont envoyé par email</h5>
+            </div>
+          </div>
+          <div class="text-center">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
