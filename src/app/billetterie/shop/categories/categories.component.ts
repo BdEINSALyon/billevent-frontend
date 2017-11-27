@@ -46,7 +46,7 @@ export class CategoriesComponent implements OnInit {
         this.order.updateBillet(this.shopManager).then(()=>{}, (error) => {
             this.order.productsCount[product.id] = countBefore;
             (<HTMLSelectElement>$event.target).value = countBefore.toString();
-            alert(error.message);
+            alert(error);
         })
     }
 

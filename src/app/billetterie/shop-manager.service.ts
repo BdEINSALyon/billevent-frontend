@@ -47,10 +47,28 @@ export class ShopManagerService {
         return new Promise((resolve, reject) => {
             switch(rule.type) {
                 case 'MaxSeats':
-                    resolve(true);
+                    this.http.post(BilleventApiService.server + '/api/rules', {
+                        compute: "MaxSeats",
+                        data: {
+                            products: Array.from(new Set(billets.map((b) => b.product.id))),
+                            options: []
+                        }
+                    }).subscribe((result) => {
+                        let count = billets.reduce((value, billet) => value + billet.product.seats, 0);
+                        if(result['value']+count > rule.value) {
+                            reject("Jauge maximal atteinte");
+                        } else {
+                            resolve(true);
+                        }
+                    }, reject);
                     break;
                 case 'MaxProductByOrder':
-                    resolve(true);
+                    let count = billets.reduce((value, billet) => value + billet.product.seats, 0);
+                    if(count > rule.value) {
+                        reject("Nombre maximal de place par commande atteinte (" + rule.value + " maximum)");
+                    } else {
+                        resolve(true);
+                    }
                     break;
                 case 'CheckMaxProductForInvite':
                     this.http.post(BilleventApiService.server + '/api/rules', {
@@ -60,7 +78,11 @@ export class ShopManagerService {
                         }
                     }).subscribe((result) => {
                         let count = billets.reduce((value, billet) => value + billet.product.seats, 0);
-                        // TODO
+                        if(result['value']+count > result['limit']) {
+                            reject("Nombre maximal d'invitation atteinte ("+ result['limit']+" maximum)");
+                        } else {
+                            resolve(true);
+                        }
                     }, reject);
                     break;
                 default:

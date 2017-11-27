@@ -32,6 +32,7 @@ export class ShopComponent implements OnInit {
                 this.loading = false;
             }, (err) => {alert('Erreur'); console.error(err);}
         );
+        window.scrollTo(0, 0)
     }
 
     private _on_error: (err) => any;
@@ -49,6 +50,7 @@ export class ShopComponent implements OnInit {
                             (order) => {
                                 this.order = order;
                                 this.step++;
+                                window.scrollTo(0, 0)
                             },
                             this._on_error
                         )

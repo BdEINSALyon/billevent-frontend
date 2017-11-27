@@ -20,7 +20,7 @@ export default class Billet {
 
     hasRule(rule: PricingRule) {
         for(let i=0; i<this.product.rules.length; i++){
-          if(this.product.rules[rule.id] === rule.id){
+          if(this.product.rules[i].id === rule.id){
             return true;
           }
         }

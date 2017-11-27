@@ -63,11 +63,13 @@ export default class Order {
                 });
                 Promise.all(rulesCheckPromises).then(
                     () => {
+                        console.log('OK');
                         resolve();
                     },
                     (error) => {
                         this.billets = oldBillets;
                         reject(error);
+                        console.log('KO');
                     }
                 );
                 console.log(billets)
