@@ -4,6 +4,7 @@ import Event from './Event';
 import Product from "./Product";
 import Category from "./Category";
 import PricingRule from "./PricingRule";
+import {ShopManagerService} from "../app/billetterie/shop-manager.service";
 
 /**
  * Gestionaire d'une commande
@@ -19,14 +20,27 @@ export default class Order {
     categories: Set<Category>;
     state: number = 0;
 
-    constructor() {
+    constructor(order: any) {
+
+        if(order) {
+            this.update(order);
+        }
+
+    }
+
+    update(order: any) {
+        this.id = parseInt(order['id']) || -1;
+        this.client = order['client'] ? new Client(order['client']) : null;
+        this.event = new Event(order['event']);
+        this.state = order['status'] || 0;
+        this.billets = order['billets'] ? order['billets'].map((b) => new Billet(b)) : [];
     }
 
     /**
      * Update quantity of Billet to match to a Product amount
      * @returns {Promise<boolean>}
      */
-    updateBillet(){
+    updateBillet(shopManager: ShopManagerService){
         return new Promise((resolve, reject) => {
             if(this.state <= 1){
                 let billets = [];
@@ -45,7 +59,7 @@ export default class Order {
                 this.billets = billets;
                 let rulesCheckPromises = [];
                 rules.forEach((rule) => {
-                    rulesCheckPromises.push(rule.validate(this));
+                    rulesCheckPromises.push(shopManager.validateRule(this, rule));
                 });
                 Promise.all(rulesCheckPromises).then(
                     () => {
@@ -122,5 +136,14 @@ export default class Order {
             })
         });
         return p;
+    }
+
+    countProducts(product: Product) {
+        return this.billets.reduce((previous, billet) => {
+            if(billet.product.id === product.id)
+                return previous + 1;
+            else
+                return previous;
+        }, 0)
     }
 }

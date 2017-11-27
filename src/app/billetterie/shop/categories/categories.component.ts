@@ -3,6 +3,7 @@ import Category from '../../../../billevent/Category';
 import {BilleventApiService} from "../../../billevent-api.service";
 import Order from "../../../../billevent/Order";
 import Product from "../../../../billevent/Product";
+import {ShopManagerService} from "../../shop-manager.service";
 
 @Component({
     selector: 'app-categories',
@@ -18,7 +19,7 @@ export class CategoriesComponent implements OnInit {
     categories: Set<Category> = new Set();
     lenght: number;
 
-    constructor(private api: BilleventApiService) {
+    constructor(private api: BilleventApiService, private shopManager: ShopManagerService) {
     }
 
     ngOnInit() {
@@ -28,7 +29,7 @@ export class CategoriesComponent implements OnInit {
                 this.order.categories = this.categories;
                 this.categories.forEach((cat) => {
                     cat.products.forEach((product) => {
-                        this.order.productsCount[product.id] = 0;
+                        this.order.productsCount[product.id] = this.order.countProducts(product);
                     })
                 });
             },
@@ -40,10 +41,9 @@ export class CategoriesComponent implements OnInit {
 
     updateCount(product: Product, $event: Event) {
         const count = parseInt((<HTMLSelectElement>$event.target).value);
-        console.log("Update " + product.id + "-" + product.name + " to " + count);
         let countBefore = this.order.productsCount[product.id];
         this.order.productsCount[product.id] = count;
-        this.order.updateBillet().then(()=>{}, (error) => {
+        this.order.updateBillet(this.shopManager).then(()=>{}, (error) => {
             this.order.productsCount[product.id] = countBefore;
             (<HTMLSelectElement>$event.target).value = countBefore.toString();
             alert(error.message);

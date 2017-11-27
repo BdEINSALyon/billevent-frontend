@@ -39,23 +39,6 @@ export default class PricingRule {
         }
     }
 
-    validate(order: Order) {
-        console.log(this.type);
-        return new Promise((resolve, reject) => {
-            switch(this.type) {
-                case 'BYTI':
-                    if(this.checkTotalCount(this.value, order)){
-                        resolve();
-                    } else {
-                        reject(Errors.BYTI)
-                    }
-                    break;
-                default:
-                    resolve(true);
-            }
-        });
-    }
-
     checkTotalCount(max: number, order: Order) {
         let count = 0;
         order.billets.forEach((billet) => {

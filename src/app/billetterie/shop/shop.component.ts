@@ -25,11 +25,13 @@ export class ShopComponent implements OnInit {
     }
 
     ngOnInit() {
-        if(!this.order) {
-            this.order = new Order();
-            this.order.setEvent(this.event);
-        }
-        this.loading = false;
+        this.loading = true;
+        this.shopManager.getCurrentOrder(this.event).subscribe(
+            (order) => {
+                this.order = order;
+                this.loading = false;
+            }, (err) => {alert('Erreur'); console.error(err);}
+        );
     }
 
     private _on_error: (err) => any;
@@ -37,7 +39,7 @@ export class ShopComponent implements OnInit {
     next(){
         switch(this.step) {
             case 0:
-                this.order.updateBillet().then(
+                this.order.updateBillet(this.shopManager).then(
                     () => {
                         this._on_error = (err) => {
                             console.error(err);
@@ -73,8 +75,7 @@ export class ShopComponent implements OnInit {
     }
 
     private reset() {
-        this.step = 0;
-        this.order = new Order();
+        this.ngOnInit();
     }
 
     back(){

@@ -1,6 +1,7 @@
 import Product from "./Product";
 import Option from "./Option";
 import Order from "./Order";
+import PricingRule from "./PricingRule";
 
 export default class Billet {
   id: number;
@@ -17,4 +18,12 @@ export default class Billet {
       this.options = [];
   }
 
+    hasRule(rule: PricingRule) {
+        for(let i=0; i<this.product.rules.length; i++){
+          if(this.product.rules[rule.id] === rule.id){
+            return true;
+          }
+        }
+        return false;
+    }
 }
