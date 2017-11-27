@@ -1,5 +1,5 @@
 <div id="confirmation" class="container">
-  <div *ngIf="state === 'loading'">
+  <div *ngIf="state === 'loading' || state == 'waiting'">
 
     <div class="loadingAnimation">
       <spinner></spinner>
@@ -14,7 +14,14 @@
     </div>
 
   </div>
-  <div *ngIf="state === 'success' && event">
+  <div *ngIf="state === 'rejected'">
+    <div class="message">
+      <h1>Erreur</h1>
+      <div class="text-danger">Le paiement a été rejeté ou annulé</div>
+    </div>
+
+  </div>
+  <div *ngIf="state === 'validated' && event">
 
     <div id="topbar" class="jumbotron-top">
       <h1><img src="http://logos.bde-insa-lyon.fr/bde/bde_70px.png" height="50" width="40"> Billevent</h1>
@@ -26,13 +33,16 @@
 
       <div class="col-8">
         <div class="paddingtmtc">
-          <div class="row mt-4">
-            <div class="col-md-4 text-right">
+          <div class="row mt-2">
+            <div class="offset-1 col-md-2 text-right">
 
               <img src="/assets/ok.png">
             </div>
-            <div class="col-md-8">
-              <h5 class="mt-5 text-success">Paiement validé, les billets sont envoyés par email</h5>
+            <div class="col-md-9">
+              <h3 class="mt-2 text-success text-center">Paiement validé</h3>
+              <div class="text-center">
+                <a [href]="ticket" class="btn btn-primary" target="_blank"><i class="fa fa-download"></i> Télécharger les billets</a>
+              </div>
             </div>
           </div>
           <div class="text-center">

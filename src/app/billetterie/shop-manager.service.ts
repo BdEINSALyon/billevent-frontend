@@ -91,6 +91,10 @@ export class ShopManagerService {
         });
     }
 
+    getFinalOrder(id): Observable<any> {
+        return this.http.get(BilleventApiService.server + '/api/orders/' + id + '/final');
+    }
+
     private callbackFor(order: Order) {
         const protocol=window.location.protocol, host=window.location.host;
         return `${protocol}//${host}/billetterie/${order.event.id}/payment/${order.id}`;

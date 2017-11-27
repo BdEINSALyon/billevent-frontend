@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import Event from "../../../billevent/Event";
 import {ActivatedRoute, RouterLinkActive} from "@angular/router";
 import {BilleventApiService} from "../../billevent-api.service";
+import {ShopManagerService} from "../shop-manager.service";
 
 @Component({
   selector: 'app-confirmation',
@@ -14,9 +15,11 @@ export class ConfirmationComponent implements OnInit {
     state = "loading";
 
     event: Event;
+    ticket: string;
 
     constructor(private route: ActivatedRoute,
-                private billeventApi: BilleventApiService) {
+                private shopManager: ShopManagerService,
+                private billeventApi:BilleventApiService) {
     }
 
 
@@ -26,10 +29,19 @@ export class ConfirmationComponent implements OnInit {
 
     loadEvent() {
         const id: number = +this.route.snapshot.paramMap.get('id');
+        const order: number = +this.route.snapshot.paramMap.get('order');
         this.billeventApi.getEvent(id).subscribe(
             (e) => {
                 this.event = e;
-                this.state = "success"
+                this.shopManager.getFinalOrder(order).subscribe(
+                    (s) => {
+                        this.state = s.status;
+                        this.ticket = s.url;
+                    },
+                    (error) => {
+                        this.state = "failed"
+                    }
+                );
             },
             (error) => {
                 this.state = "failed"
