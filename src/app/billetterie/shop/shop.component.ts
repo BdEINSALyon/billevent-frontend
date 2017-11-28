@@ -29,6 +29,7 @@ export class ShopComponent implements OnInit {
         this.shopManager.getCurrentOrder(this.event).subscribe(
             (order) => {
                 this.order = order;
+                console.log(order);
                 this.loading = false;
             }, (err) => {alert('Erreur'); console.error(err);}
         );
@@ -38,8 +39,10 @@ export class ShopComponent implements OnInit {
     private _on_error: (err) => any;
 
     next(){
-        switch(this.step) {
+        switch(this.order.state) {
             case 0:
+            case 1:
+            case 2:
                 this.order.updateBillet(this.shopManager).then(
                     () => {
                         this._on_error = (err) => {
@@ -49,24 +52,18 @@ export class ShopComponent implements OnInit {
                         this.shopManager.register(this.order).subscribe(
                             (order) => {
                                 this.order = order;
-                                this.step++;
                                 window.scrollTo(0, 0)
                             },
                             this._on_error
                         )
-                    }, () => {
+                    }, (error) => {
+                        console.error(error);
                         this.reset();
                     }
                 );
                 break;
-            case 1:
-
-                break;
-            case 2:
-
-                break;
             case 3:
-
+                this.order.state++;
                 break;
             case 4:
 

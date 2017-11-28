@@ -1,3 +1,33 @@
-<p>
-  questions works!
-</p>
+<div id="questions">
+
+  <div class="panel panel-default" *ngFor="let billet of order.billets; index as billetNum">
+    <div class="panel-heading">
+      <h2>Billet #{{billetNum+1}} - {{billet.product.name}}</h2>
+    </div>
+    <div class="panel-body">
+      <div class="participants">
+        <div class="participant row" *ngFor="let participant of participants(billet); index as i; first as isFirst; last as isLast;">
+          <div class="col-md-12"><h3>Participant #{{i+1}}</h3></div>
+          <div class="form-group col-md-6">
+            <label>Prénom <span class="text-warning">(requis)</span></label>
+            <input type="text" class="form-control" placeholder="Prénom" [(ngModel)]="participant.first_name">
+          </div>
+          <div class="form-group col-md-6">
+            <label>Nom <span class="text-warning">(requis)</span></label>
+            <input type="text" class="form-control" placeholder="Nom" [(ngModel)]="participant.last_name">
+          </div>
+          <div class="form-group col-md-6">
+            <label>Email</label>
+            <input type="email" class="form-control" placeholder="Email" [(ngModel)]="participant.email">
+          </div>
+          <div class="form-group col-md-6">
+            <label>Téléphone</label>
+            <input type="tel" class="form-control" placeholder="Téléphone" [(ngModel)]="participant.phone">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

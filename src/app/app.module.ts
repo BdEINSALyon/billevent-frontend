@@ -15,7 +15,6 @@ import { SidebarEventComponent } from './billetterie/sidebar/event/event.compone
 import { SidebarOrganizerComponent } from './billetterie/sidebar/organizer/organizer.component';
 import { ShopComponent } from './billetterie/shop/shop.component';
 import { CategoriesComponent } from './billetterie/shop/categories/categories.component';
-import { ProductComponent } from './billetterie/shop/product/product.component';
 import { QuestionsComponent } from './billetterie/shop/questions/questions.component';
 import { PaymentComponent } from './billetterie/shop/payment/payment.component';
 import { ConfirmationComponent } from './billetterie/confirmation/confirmation.component';
@@ -46,7 +45,6 @@ const appRoutes: Routes = [
         SidebarOrganizerComponent,
         ShopComponent,
         CategoriesComponent,
-        ProductComponent,
         QuestionsComponent,
         PaymentComponent,
         ConfirmationComponent,

@@ -1,4 +1,4 @@
-<div id="billeterie" class="jumbotron-main">
+<div id="billeterie" class="ml-3 mr-3">
     <div class="loader" *ngIf="loading">
         <div class="loadingAnimation">
             <spinner></spinner>
@@ -6,10 +6,13 @@
         </div>
     </div>
     <div class="shop" *ngIf="!loading">
-        <div *ngIf="step === 0" id="category">
+        <div *ngIf="order.state === 0 || order.state <= 2" id="category">
             <app-categories [order]="order"></app-categories>
         </div>
-        <div *ngIf="step === 1" id="payment">
+        <div *ngIf="order.state === 3" id="questions">
+            <app-questions [order]="order"></app-questions>
+        </div>
+        <div *ngIf="order.state === 4" id="payment">
             <app-payment [order]="order"></app-payment>
         </div>
         <div id="next" align="right" class="paddingbtn">
