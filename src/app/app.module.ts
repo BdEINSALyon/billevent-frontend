@@ -29,6 +29,7 @@ import { QuestionComponent } from './billetterie/shop/questions/question/questio
 import { OptionsComponent } from './billetterie/shop/options/options.component';
 import { QuestionTargetPipe } from './billetterie/shop/questions/question-target.pipe';
 import { CancelOrderButtonComponent } from './billetterie/shop/utils/cancel-order-button/cancel-order-button.component';
+import { SelectOptionCountComponent } from './billetterie/shop/options/select-option-count/select-option-count.component';
 
 registerLocaleData(localeFr);
 
@@ -57,7 +58,8 @@ const appRoutes: Routes = [
         QuestionComponent,
         OptionsComponent,
         QuestionTargetPipe,
-        CancelOrderButtonComponent
+        CancelOrderButtonComponent,
+        SelectOptionCountComponent
     ],
     imports: [
         RouterModule.forRoot(

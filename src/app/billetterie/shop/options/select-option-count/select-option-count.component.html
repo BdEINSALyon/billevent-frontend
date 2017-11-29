@@ -1,0 +1,16 @@
+<div class="row option" (click)="selectIfSingle()" [ngClass]="{'single':option.type === 'single'}">
+  <div class="col-md-7">
+    <h5>{{option.name}}</h5>
+  </div>
+  <div class="col-md-2 text-center">
+    {{option.price_ttc|currency:'EUR':'symbol-narrow':'1.2-2'}}
+  </div>
+  <div class="col-md-3" *ngIf="option.type === 'single'">
+    <input type="checkbox" (change)="updateSingleCount($event)" [(ngModel)]="selected" class="form-control" title="choisir l'option {{option.name}}">
+  </div>
+  <div class="col-md-3" *ngIf="option.type === 'multiple'">
+    <select (change)="updateMultipleCount($event)" class="form-control" title="choisir l'option {{option.name}}">
+      <option *ngFor="let i of [0,1,2,3,4,5,7,8,9,10,11,12]" [value]="i">{{i}} - {{i*option.price_ttc|currency:'EUR':'symbol-narrow':'1.2-2'}}</option>
+    </select>
+  </div>
+</div>

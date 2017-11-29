@@ -9,7 +9,7 @@ export class Participant {
     last_name: string;
     email: string;
     phone: string;
-    private billet: Billet;
+    billet: Billet;
 
     constructor(billet, participant?) {
         this.billet = billet;
@@ -22,7 +22,7 @@ export class Participant {
         }
     }
 
-    toJSON(){
+    toJSON() {
         let json = {
             first_name: this.first_name,
             last_name: this.last_name,
@@ -30,14 +30,14 @@ export class Participant {
             phone: this.phone || '',
             billet: this.billet.id
         };
-        if(this.id > 0){
+        if (this.id > 0) {
             json['id'] = this.id;
         }
         return json;
     }
 }
 
-class BilletOption {
+export class BilletOption {
 
     id: number = -1;
     participant: Participant;
@@ -45,24 +45,24 @@ class BilletOption {
     option: Option;
     amount: number = 1;
 
-    constructor(billet: Billet, option: any) {
+    constructor(billet?: Billet, option?: any) {
         this.billet = billet;
-        if(option) {
+        if (option) {
             this.id = option['id'];
             this.amount = option['amount'];
             this.option = new Option(option.option);
-            this.participant = this.billet.participants.find((p) => p.id == option.participant || (option.participant && option.participant.id))
+            this.participant = this.billet.participants ? (this.billet.participants.find((p) => p.id == option.participant || (option.participant && option.participant.id))) : null;
         }
     }
 
-    toJSON(){
+    toJSON() {
         let json = {
-            billet: this.billet.id,
+            billet: this.billet ? this.billet.id : null,
             option: this.option.id,
             amount: this.amount,
             participant: this.participant ? this.participant.id : null
         };
-        if(this.id > 0){
+        if (this.id > 0) {
             json['id'] = this.id;
         }
         return json;
@@ -78,7 +78,7 @@ export default class Billet {
 
     constructor(billet) {
         this.id = billet.id;
-        this.product = new Product(billet.product);
+        this.product = billet.product ? new Product(billet.product) : null;
         if (billet.billet_options)
             this.billet_options = billet.billet_options.map((option) => new BilletOption(this, option));
         else

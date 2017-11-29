@@ -27,8 +27,8 @@ export default class Product {
         } else {
             this.id = product.id;
             this.name = product.name;
-            this.price_ht = product.price_ht;
-            this.price_ttc = product.price_ttc;
+            this.price_ht = parseFloat(product.price_ht);
+            this.price_ttc = parseFloat(product.price_ttc);
             if (product.rules)
                 this.rules = product.rules.map((rule) => new PricingRule(rule));
             else

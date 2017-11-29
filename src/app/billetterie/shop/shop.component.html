@@ -18,13 +18,5 @@
         <div *ngIf="order.state === 5" id="payment">
             <app-payment [order]="order"></app-payment>
         </div>
-        <div *ngIf="!order.state" id="error">
-            <div class="loadingAnimation">
-                <spinner></spinner>
-                <h2>Erreur, rechargez la page.</h2>
-            </div>
-            <h4>Débug:</h4>
-            <pre>{{debug()}}</pre>
-        </div>
     </div>
 </div>

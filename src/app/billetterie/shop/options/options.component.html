@@ -1,3 +1,54 @@
-<p>
-  options works!
-</p>
+<div id="options">
+  <form #f="ngForm" (ngSubmit)="validateOptions()">
+    <div class="panel panel-default" *ngFor="let billet of order.billets; index as billetNum">
+      <div class="panel-heading">
+        <h2>Billet #{{billetNum+1}} - {{billet.product.name}}</h2>
+      </div>
+      <div class="panel-body">
+        <div class="participants">
+          <div class="participant row"
+               *ngFor="let participant of billet.participants; index as i; first as isFirst; last as isLast;">
+            <div class="col-md-12"><h3>{{participant.first_name}} {{participant.last_name}}</h3></div>
+            <div class="col-md-12">
+              <app-select-option-count
+                      *ngFor="let option of billet.product.options | questionTarget:'Participant'"
+                      [participant]="participant" [option]="option"
+                      (billet_option)="updateBilletOption($event)"></app-select-option-count>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default" *ngIf="hasOrderOptions()">
+      <div class="panel-heading">
+        <h2>Options</h2>
+      </div>
+      <div class="panel-body">
+        <div class="options">
+          <div class="option row"
+               *ngFor="let option of globalOptions; index as i; first as isFirst; last as isLast;">
+            <div class="col-md-12">
+              <app-select-option-count [option]="option"
+                      (billet_option)="updateBilletOption($event)"></app-select-option-count>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="total" class="row">
+      <div class="col-3 offset-6 text-right">Total</div>
+      <div class="col-3 text-center">{{getTotalPrice() | currency:'EUR':'symbol-narrow':'1.2-2'}}</div>
+    </div>
+    <div class="mt-2">
+      <div class="row">
+        <div class="col-md-5">
+          <app-cancel-order-button [order]="order"></app-cancel-order-button>
+        </div>
+        <div class="col-md-5 offset-md-2">
+          <button class="btn btn-primary btn-block">Suivant</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>

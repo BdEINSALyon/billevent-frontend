@@ -16,6 +16,8 @@ export default class Option {
   rules: PricingRule[];
   event: Event;
   seats: number;
+    target: string;
+    type: string;
 
   constructor(option) {
     if (options.hasOwnProperty(option.id)) {
@@ -23,11 +25,13 @@ export default class Option {
     } else {
       this.id = option.id;
       this.name = option.name;
-      this.price_ht = option.price_ht;
-      this.price_ttc = option.price_ttc;
+      this.price_ht = parseFloat(option.price_ht);
+      this.price_ttc = parseFloat(option.price_ttc);
       this.rules = option.rules.map((rule) => new PricingRule(rule));
       this.event = option.event ? new Event(option.event) : null;
       this.seats = option.seats || 1;
+      this.target = option.target || 'Order';
+      this.type = option.type || 'single';
       options[option.id] = this;
     }
   }

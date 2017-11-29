@@ -3,7 +3,7 @@ import Order from "../../billevent/Order";
 import Event from "../../billevent/Event";
 import {HttpClient} from "@angular/common/http";
 import {BilleventApiService} from "../billevent-api.service";
-import Billet, {Participant} from "../../billevent/Billet";
+import Billet, {BilletOption, Participant} from "../../billevent/Billet";
 import {Observable} from "rxjs/Observable";
 import {Router} from "@angular/router";
 import PricingRule from "../../billevent/PricingRule";
@@ -97,7 +97,7 @@ export class ShopManagerService {
     }
 
     getFinalOrder(id): Observable<any> {
-        return this.http.get(BilleventApiService.server + '/api/order/' + id + '/final');
+        return this.http.get(BilleventApiService.server + '/api/order/' + id + '/final/');
     }
 
     private callbackFor(order: Order) {
@@ -132,6 +132,18 @@ export class ShopManagerService {
         const data = Array.from(answers).map((p) => p.toJSON());
 
         return this.http.post(BilleventApiService.server + '/api/order/' + order.id + '/answers/', data).map(
+            (o: any) => {
+                console.log(o);
+                order.state = o.status;
+                return order;
+            }
+        )
+    }
+
+    saveOptions(order: Order, billetOption: Set<BilletOption>): Observable<Order> {
+        const data = Array.from(billetOption).filter((bo) => bo.amount > 0).map((p) => p.toJSON());
+
+        return this.http.post(BilleventApiService.server + '/api/order/' + order.id + '/billet_options/', data).map(
             (o: any) => {
                 console.log(o);
                 order.state = o.status;
