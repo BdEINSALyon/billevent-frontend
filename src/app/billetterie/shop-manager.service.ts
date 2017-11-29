@@ -3,10 +3,11 @@ import Order from "../../billevent/Order";
 import Event from "../../billevent/Event";
 import {HttpClient} from "@angular/common/http";
 import {BilleventApiService} from "../billevent-api.service";
-import Billet from "../../billevent/Billet";
+import Billet, {Participant} from "../../billevent/Billet";
 import {Observable} from "rxjs/Observable";
 import {Router} from "@angular/router";
 import PricingRule from "../../billevent/PricingRule";
+import Answer from "../../billevent/Answer";
 
 @Injectable()
 export class ShopManagerService {
@@ -14,6 +15,10 @@ export class ShopManagerService {
     constructor(private http: HttpClient,
                 private api: BilleventApiService,
                 private router: Router) {
+    }
+
+    cancelOrder(order: Order){
+        return this.http.post(BilleventApiService.server + '/api/order/' + order.id + '/cancel/', {})
     }
 
     getCurrentOrder(event: Event) : Observable<Order> {
@@ -92,11 +97,46 @@ export class ShopManagerService {
     }
 
     getFinalOrder(id): Observable<any> {
-        return this.http.get(BilleventApiService.server + '/api/orders/' + id + '/final');
+        return this.http.get(BilleventApiService.server + '/api/order/' + id + '/final');
     }
 
     private callbackFor(order: Order) {
         const protocol=window.location.protocol, host=window.location.host;
         return `${protocol}//${host}/billetterie/${order.event.id}/payment/${order.id}`;
+    }
+
+    saveParticipants(order: Order): Observable<Order> {
+        let billets: Map<number, Billet> = new Map();
+        let participants: Set<Participant> = new Set();
+        order.billets.forEach((billet) => {
+            billets.set(billet.id, billet);
+            billet.participants.forEach((p) => participants.add(p));
+        });
+        const data = Array.from(participants).map((p) => p.toJSON());
+
+        return this.http.post(BilleventApiService.server + '/api/order/' + order.id + '/participants/', data).map(
+            (response: any) => {
+                order.state = response.status;
+                response.billets.forEach((b) => {
+                    billets.get(b.id).participants.forEach((p, i) => {
+                        p.id = b.participants[i].id;
+                    });
+                });
+                console.log(billets);
+                return order;
+            }
+        )
+    }
+
+    saveAnswers(order: Order, answers: Set<Answer>): Observable<Order> {
+        const data = Array.from(answers).map((p) => p.toJSON());
+
+        return this.http.post(BilleventApiService.server + '/api/order/' + order.id + '/answers/', data).map(
+            (o: any) => {
+                console.log(o);
+                order.state = o.status;
+                return order;
+            }
+        )
     }
 }

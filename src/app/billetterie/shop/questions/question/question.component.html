@@ -1,0 +1,18 @@
+<div class="question">
+    <div class="form-group">
+        <label>{{question.question}}  <span *ngIf="question.required" class="text-warning">(requis)</span></label>
+        <input *ngIf="question.question_type == 0" type="text" required="{{question.required}}"
+               [name]="'question_'+id" [(ngModel)] = "_answer.value"
+               title="{{question.question}}" (change)="update($event)" class="form-control">
+        <textarea *ngIf="question.question_type == 1" type="text" required="{{question.required}}"
+                  [name]="'question_'+id" [(ngModel)] = "_answer.value"
+                  title="{{question.question}}" (change)="update($event)" class="form-control"></textarea>
+        <select *ngIf="question.question_type == 4" required="{{question.required}}"
+                [name]="'question_'+id" [(ngModel)] = "_answer.value"
+                title="{{question.question}}" (change)="update($event)" class="form-control">
+            <option *ngFor="let field of question.data" [value]="field">{{field}}</option>
+        </select>
+        <span *ngIf="question.help_text" class="text-muted">{{question.help_text}}</span>
+    </div>
+</div>
+

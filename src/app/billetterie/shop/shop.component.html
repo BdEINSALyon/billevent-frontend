@@ -1,4 +1,4 @@
-<div id="billeterie" class="ml-3 mr-3">
+<div id="billeterie" class="ml-3 mr-3 mb-4">
     <div class="loader" *ngIf="loading">
         <div class="loadingAnimation">
             <spinner></spinner>
@@ -6,18 +6,25 @@
         </div>
     </div>
     <div class="shop" *ngIf="!loading">
-        <div *ngIf="order.state === 0 || order.state <= 2" id="category">
+        <div *ngIf="order.state <= 1" id="category">
             <app-categories [order]="order"></app-categories>
         </div>
-        <div *ngIf="order.state === 3" id="questions">
+        <div *ngIf="order.state === 2 || order.state === 3" id="questions">
             <app-questions [order]="order"></app-questions>
         </div>
-        <div *ngIf="order.state === 4" id="payment">
+        <div *ngIf="order.state === 4" id="options-select">
+            <app-options [order]="order"></app-options>
+        </div>
+        <div *ngIf="order.state === 5" id="payment">
             <app-payment [order]="order"></app-payment>
         </div>
-        <div id="next" align="right" class="paddingbtn">
-            <button type="button" *ngIf="canBack()" class="btn btn-primary" (click)="back()">Retour</button>
-            <button type="button" *ngIf="canNext()" class="btn btn-primary" (click)="next()">Suivant</button>
+        <div *ngIf="!order.state" id="error">
+            <div class="loadingAnimation">
+                <spinner></spinner>
+                <h2>Erreur, rechargez la page.</h2>
+            </div>
+            <h4>Débug:</h4>
+            <pre>{{debug()}}</pre>
         </div>
     </div>
 </div>

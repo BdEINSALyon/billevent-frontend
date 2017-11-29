@@ -47,4 +47,9 @@
         <div class="col-3 offset-6 text-right">Total</div>
         <div class="col-3 text-center">{{getTotalPrice() | currency:'EUR':'symbol-narrow':'1.2-2'}}</div>
     </div>
+    <div class="mt-2">
+        <div class="col-md-5 offset-md-7">
+            <div class="btn btn-primary btn-block" (click)="validateOrder()">Suivant</div>
+        </div>
+    </div>
 </div>

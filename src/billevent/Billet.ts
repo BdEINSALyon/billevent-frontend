@@ -9,8 +9,10 @@ export class Participant {
     last_name: string;
     email: string;
     phone: string;
+    private billet: Billet;
 
-    constructor(participant?) {
+    constructor(billet, participant?) {
+        this.billet = billet;
         if (participant) {
             this.id = participant['id'];
             this.first_name = participant['first_name'];
@@ -24,8 +26,9 @@ export class Participant {
         let json = {
             first_name: this.first_name,
             last_name: this.last_name,
-            email: this.email,
-            phone: this.phone
+            email: this.email || '',
+            phone: this.phone || '',
+            billet: this.billet.id
         };
         if(this.id > 0){
             json['id'] = this.id;
@@ -82,7 +85,7 @@ export default class Billet {
             this.billet_options = [];
 
         if (billet.participants)
-            this.participants = billet.participants.map((p) => new Participant(p));
+            this.participants = billet.participants.map((p) => new Participant(this, p));
         else
             this.participants = [];
     }

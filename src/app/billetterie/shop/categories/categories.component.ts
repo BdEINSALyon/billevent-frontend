@@ -23,6 +23,7 @@ export class CategoriesComponent implements OnInit {
     }
 
     ngOnInit() {
+        window.scrollTo(0, 0);
         this.api.getCategories(this.order.event.id).subscribe(
             (categories) => {
                 this.categories = new Set(categories);
@@ -52,6 +53,32 @@ export class CategoriesComponent implements OnInit {
 
     getTotalPrice() {
         return this.order.getPriceTTC();
+    }
+
+    validateOrder(){
+
+        this.order.updateBillet(this.shopManager).then(
+            () => {
+                if(this.order.billets.length <= 0) return;
+                this.shopManager.register(this.order).subscribe(
+                    (order) => {
+                        this.order = order;
+                        window.scrollTo(0, 0)
+                    },
+                    (err) => {
+                        console.error(err);
+                        alert('Une erreur s\'est produite, la commande ne peut pas être enregistrée.');
+                    }
+                )
+            }, (error) => {
+                console.error(error);
+                if(typeof error === 'string')
+                    alert(error);
+                else
+                    alert('Une erreur s\'est produite, la commande ne peut pas être enregistrée.');
+
+            }
+        );
     }
 
 }

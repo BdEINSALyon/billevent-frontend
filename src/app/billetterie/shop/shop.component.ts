@@ -24,6 +24,12 @@ export class ShopComponent implements OnInit {
         this.step = 0;
     }
 
+    debug(){
+        let debug = `id:${this.order.id}
+status:${this.order.state}`
+        return debug;
+    }
+
     ngOnInit() {
         this.loading = true;
         this.shopManager.getCurrentOrder(this.event).subscribe(
@@ -34,59 +40,6 @@ export class ShopComponent implements OnInit {
             }, (err) => {alert('Erreur'); console.error(err);}
         );
         window.scrollTo(0, 0)
-    }
-
-    private _on_error: (err) => any;
-
-    next(){
-        switch(this.order.state) {
-            case 0:
-            case 1:
-            case 2:
-                this.order.updateBillet(this.shopManager).then(
-                    () => {
-                        this._on_error = (err) => {
-                            console.error(err);
-                            alert('Une erreur s\'est produite, la commande ne peut pas être enregistrée.')
-                        };
-                        this.shopManager.register(this.order).subscribe(
-                            (order) => {
-                                this.order = order;
-                                window.scrollTo(0, 0)
-                            },
-                            this._on_error
-                        )
-                    }, (error) => {
-                        console.error(error);
-                        this.reset();
-                    }
-                );
-                break;
-            case 3:
-                this.order.state++;
-                break;
-            case 4:
-
-                break;
-            default:
-                this.reset();
-        }
-    }
-
-    private reset() {
-        this.ngOnInit();
-    }
-
-    back(){
-        this.step--;
-    }
-
-    canNext(){
-        return this.step < 1
-    }
-
-    canBack(){
-        return false
     }
 
 }

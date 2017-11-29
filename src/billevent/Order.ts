@@ -20,6 +20,7 @@ export default class Order {
     categories: Set<Category>;
     state: number = 0;
 
+
     constructor(order: any) {
 
         if(order) {

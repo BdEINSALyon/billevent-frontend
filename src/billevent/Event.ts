@@ -35,7 +35,7 @@ export default class Event {
       this.description = event.description;
       this.organizer = event.organizer ? new Organizer(event.organizer) : null;
       this.start_time = new Date(event.start_time);
-      this.end_time = new Date(event.start_time);
+      this.end_time = new Date(event.end_time);
       this.website = event.website;
       this.place = event.place;
       this.address = event.address;

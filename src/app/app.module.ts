@@ -21,10 +21,14 @@ import { ConfirmationComponent } from './billetterie/confirmation/confirmation.c
 import {HttpClientModule} from '@angular/common/http';
 import {BilleventApiService} from "./billevent-api.service";
 import {registerLocaleData} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { InvitationTokenComponent } from './invitation-token/invitation-token.component';
 import { SpinnerComponent } from './utils/spinner/spinner.component';
 import {ShopManagerService} from "./billetterie/shop-manager.service";
+import { QuestionComponent } from './billetterie/shop/questions/question/question.component';
+import { OptionsComponent } from './billetterie/shop/options/options.component';
+import { QuestionTargetPipe } from './billetterie/shop/questions/question-target.pipe';
+import { CancelOrderButtonComponent } from './billetterie/shop/utils/cancel-order-button/cancel-order-button.component';
 
 registerLocaleData(localeFr);
 
@@ -49,7 +53,11 @@ const appRoutes: Routes = [
         PaymentComponent,
         ConfirmationComponent,
         InvitationTokenComponent,
-        SpinnerComponent
+        SpinnerComponent,
+        QuestionComponent,
+        OptionsComponent,
+        QuestionTargetPipe,
+        CancelOrderButtonComponent
     ],
     imports: [
         RouterModule.forRoot(
@@ -66,6 +74,7 @@ const appRoutes: Routes = [
                 authScheme: 'JWT '
             }
         }),
+        ReactiveFormsModule,
         FormsModule
     ],
     providers: [

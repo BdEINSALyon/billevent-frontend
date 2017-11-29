@@ -5,8 +5,8 @@
   <div class="panel-body">
     <h5>L'évènement :</h5>
     <p id="date">
-      <i class="fa fa-calendar"></i> {{joli(event.start_time.toLocaleDateString())}}<br>
-      <i class="fa fa-clock-o"></i> {{event.start_time.toLocaleTimeString()}} à {{event.end_time.toLocaleTimeString()}}
+      <i class="fa fa-calendar"></i> {{event.start_time | date:'mediumDate'}}<br>
+      <i class="fa fa-clock-o"></i> {{event.start_time | date:'shortTime'}} à {{event.end_time | date:'shortTime'}}
     </p>
     <div id="localisation">
       <h5><i class="fa fa-map-marker"></i> {{event.place}}</h5>
