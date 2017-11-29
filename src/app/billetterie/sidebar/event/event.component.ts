@@ -13,7 +13,7 @@ export class SidebarEventComponent implements OnInit {
   @Input()
   event: Event;
   url: SafeResourceUrl;
-  private gmap: SafeResourceUrl;
+  gmap: SafeResourceUrl;
 
   constructor(public sanitizer:DomSanitizer) {
   }

@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-    apiServer: "http://localhost:8000/api"
+    apiServer: "http://localhost:8000",
+    jwtDomains: ['localhost:8000']
 };

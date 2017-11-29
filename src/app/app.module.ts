@@ -69,7 +69,7 @@ const appRoutes: Routes = [
         HttpClientModule,
         JwtModule.forRoot({
             config: {
-                tokenGetter: () => {
+                tokenGetter() {
                     return localStorage.getItem(BilleventApiService.TOKEN_STORAGE_KEY);
                 },
                 whitelistedDomains: BilleventApiService.domains,

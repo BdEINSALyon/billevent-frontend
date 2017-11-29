@@ -5,6 +5,7 @@ import Event from '../billevent/Event';
 import Product from "../billevent/Product";
 import Category from "../billevent/Category";
 import {Invitation} from "../billevent/Invitation";
+import {environment} from '../environments/environment';
 
 @Injectable()
 export class BilleventApiService {
@@ -13,12 +14,8 @@ export class BilleventApiService {
      * @type {string}
      */
 
-    static server: string = "http://localhost:8000";
-    static DEV_LOGIN = {
-        login: 'pvienne',
-        password: 'vienne'
-    };
-    static domains: string[] = ['localhost:8000'];
+    static server: string = environment.apiServer;
+    static domains: string[] = environment.jwtDomains;
     static TOKEN_STORAGE_KEY: string = 'auth_token';
 
     constructor(private http: HttpClient) {
