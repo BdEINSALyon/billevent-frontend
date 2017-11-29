@@ -40,6 +40,10 @@ const appRoutes: Routes = [
     {path: 'invitation/:token', component: InvitationTokenComponent, pathMatch: 'full'}
 ];
 
+export function tokenGetter() {
+    return localStorage.getItem(BilleventApiService.TOKEN_STORAGE_KEY);
+}
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -69,9 +73,7 @@ const appRoutes: Routes = [
         HttpClientModule,
         JwtModule.forRoot({
             config: {
-                tokenGetter() {
-                    return localStorage.getItem(BilleventApiService.TOKEN_STORAGE_KEY);
-                },
+                tokenGetter: tokenGetter,
                 whitelistedDomains: BilleventApiService.domains,
                 authScheme: 'JWT '
             }

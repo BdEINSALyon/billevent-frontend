@@ -28,7 +28,8 @@ export class InvitationTokenComponent implements OnInit {
                 this.state = "success";
                 this.router.navigate(['billetterie', invitation.event.id])
             },
-            () => {
+            (err) => {
+                console.error(err);
                 setTimeout(() => {
                     this.state = "failed"
                 }, 2500);
