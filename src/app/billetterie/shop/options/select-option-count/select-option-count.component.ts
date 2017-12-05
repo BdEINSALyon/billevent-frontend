@@ -51,6 +51,9 @@ export class SelectOptionCountComponent implements OnInit {
     }
 
     selectIfSingle() {
-        this.selected = !!!this.selected;
+        if(this.option.type === 'single') {
+            this.selected = !this.selected;
+            this._billet_option.amount = this.selected ? 1 : 0;
+        }
     }
 }
