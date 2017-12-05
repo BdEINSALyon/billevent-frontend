@@ -4,6 +4,7 @@ import {ActivatedRoute, RouterLinkActive} from "@angular/router";
 import {BilleventApiService} from "../../billevent-api.service";
 import {ShopManagerService} from "../shop-manager.service";
 
+//
 @Component({
   selector: 'app-confirmation',
   templateUrl: './confirmation.component.html',

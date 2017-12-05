@@ -10,7 +10,7 @@
   </div>
   <div class="col-md-3" *ngIf="option.type === 'multiple'">
     <select (change)="updateMultipleCount($event)" class="form-control" title="choisir l'option {{option.name}}">
-      <option *ngFor="let i of [0,1,2,3,4,5,7,8,9,10,11,12]" [value]="i">{{i}} - {{i*option.price_ttc|currency:'EUR':'symbol-narrow':'1.2-2'}}</option>
+      <option *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11,12]" [value]="i">{{i}} - {{i*option.price_ttc|currency:'EUR':'symbol-narrow':'1.2-2'}}</option>
     </select>
   </div>
 </div>
