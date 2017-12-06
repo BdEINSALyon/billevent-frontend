@@ -7,17 +7,17 @@ export class Invitation{
     id: number;
     event: Event;
     client: Client;
-    token: String;
-    seats: String;
-    bought_seats: String;
+    token: string;
+    seats: number;
+    bought_seats: number;
 
     constructor(invitation){
         this.id = invitation.id;
         this.event = new Event(invitation.event);
         this.client = invitation.client;
         this.token = invitation.token;
-        this.seats = invitation.seats;
-        this.bought_seats = invitation.bought_seats;
+        this.seats = parseInt(invitation.seats);
+        this.bought_seats = parseInt(invitation.bought_seats);
     }
 
 }
