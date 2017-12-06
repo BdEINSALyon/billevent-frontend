@@ -24,12 +24,6 @@ export class ShopComponent implements OnInit {
         this.step = 0;
     }
 
-    debug(){
-        let debug = `id:${this.order.id}
-status:${this.order.state}`
-        return debug;
-    }
-
     ngOnInit() {
         this.loading = true;
         this.shopManager.getCurrentOrder(this.event).subscribe(

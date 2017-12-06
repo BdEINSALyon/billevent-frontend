@@ -1,0 +1,15 @@
+.shop{
+  .shopHeader{
+    display: flex;
+    > div{
+      flex-grow: 1;
+      text-align: center;
+      padding: 1em;
+      &.active{
+        font-weight: bolder;
+        background: #e1e1e1;
+        border-radius: 1em 1em 0 0;
+      }
+    }
+  }
+}

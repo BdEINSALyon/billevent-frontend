@@ -6,6 +6,24 @@
         </div>
     </div>
     <div class="shop" *ngIf="!loading">
+        <div class="shopHeader" *ngIf="order.state > 0">
+            <div [class.active]="order.state <= 1">
+                <i class="fa fa-cart-arrow-down"></i><br>
+                Boutique
+            </div>
+            <div [class.active]="order.state === 2 || order.state === 3">
+                <i class="fa fa-users"></i><br>
+                Particpants
+            </div>
+            <div [class.active]="order.state === 4">
+                <i class="fa fa-glass"></i><br>
+                Options
+            </div>
+            <div [class.active]="order.state === 5">
+                <i class="fa fa-credit-card"></i><br>
+                Paiement
+            </div>
+        </div>
         <div *ngIf="order.state <= 1" id="category">
             <app-categories [order]="order"></app-categories>
         </div>
