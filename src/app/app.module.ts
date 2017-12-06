@@ -30,6 +30,7 @@ import { OptionsComponent } from './billetterie/shop/options/options.component';
 import { QuestionTargetPipe } from './billetterie/shop/questions/question-target.pipe';
 import { CancelOrderButtonComponent } from './billetterie/shop/utils/cancel-order-button/cancel-order-button.component';
 import { SelectOptionCountComponent } from './billetterie/shop/options/select-option-count/select-option-count.component';
+import { InvitationComponent } from './billetterie/sidebar/invitation/invitation.component';
 
 registerLocaleData(localeFr);
 
@@ -63,7 +64,8 @@ export function tokenGetter() {
         OptionsComponent,
         QuestionTargetPipe,
         CancelOrderButtonComponent,
-        SelectOptionCountComponent
+        SelectOptionCountComponent,
+        InvitationComponent
     ],
     imports: [
         RouterModule.forRoot(

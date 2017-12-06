@@ -1,0 +1,15 @@
+<div id="event" class="panel panel-default">
+  <div class="panel-heading" id="titre_event">
+    <h3>Invitation</h3>
+  </div>
+  <div class="panel-body">
+    <h5>Bonjour {{invitation.client.first_name}}</h5>
+    <p>
+      Votre invitation est valable pour {{invitation.seats}} participant{{invitation.seats > 1?'s':''}}
+    </p>
+    <p *ngIf="invitation.bought_seats > 0">
+      Vous avez déjà utilisé {{invitation.bought_seats}} place{{invitation.bought_seats > 1?'s':''}}
+    </p>
+  </div>
+
+</div>

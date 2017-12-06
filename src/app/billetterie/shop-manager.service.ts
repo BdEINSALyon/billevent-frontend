@@ -8,6 +8,7 @@ import {Observable} from "rxjs/Observable";
 import {Router} from "@angular/router";
 import PricingRule from "../../billevent/PricingRule";
 import Answer from "../../billevent/Answer";
+import {Invitation} from "../../billevent/Invitation";
 
 @Injectable()
 export class ShopManagerService {
@@ -15,6 +16,12 @@ export class ShopManagerService {
     constructor(private http: HttpClient,
                 private api: BilleventApiService,
                 private router: Router) {
+    }
+
+    getInvitation(event: Event) : Observable<Invitation>{
+        return this.http.get(BilleventApiService.server + '/api/events/' + event.id + '/invitation/').map(
+            (invit) => new Invitation(invit)
+        )
     }
 
     cancelOrder(order: Order){
