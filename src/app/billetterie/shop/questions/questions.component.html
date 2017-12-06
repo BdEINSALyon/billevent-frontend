@@ -52,6 +52,12 @@
                                     (answer)="updateAnswer($event)"></app-question>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <app-question
+                                *ngFor="let question of billet.product.questions | questionTarget:'Billet'"
+                                [billet]="billet" [question]="question"  [id]="question.id + '_' + billetNum"
+                                (answer)="updateAnswer($event)"></app-question>
+                    </div>
                 </div>
             </div>
         </div>

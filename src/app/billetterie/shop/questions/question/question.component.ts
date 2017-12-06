@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output, Input, ViewEncapsulation} from '@angular/core';
 import Question from "../../../../../billevent/Question";
 import Answer from "../../../../../billevent/Answer";
-import {Participant} from "../../../../../billevent/Billet";
+import {default as Billet, Participant} from "../../../../../billevent/Billet";
 import {FormGroup} from "@angular/forms";
 
 @Component({
@@ -19,6 +19,9 @@ export class QuestionComponent implements OnInit {
     participant: Participant;
 
     @Input()
+    billet: Billet;
+
+    @Input()
     id: string = "noid";
 
     @Output()
@@ -34,6 +37,8 @@ export class QuestionComponent implements OnInit {
         this._answer = new Answer(this.question);
         if(this.participant)
             this._answer.participant = this.participant;
+        if(this.billet)
+            this._answer.billet = this.billet;
         this.answer.emit(this._answer);
     }
 
