@@ -20,6 +20,7 @@ export default class Product {
     questions: Question[] = [];
     event: Event;
     seats: number;
+    description: string;
 
     constructor(product) {
         if (products.hasOwnProperty(product.id)) {
@@ -39,6 +40,7 @@ export default class Product {
                 this.options = product.options.map((opt) => new Option(opt));
             this.event = product.event ? new Event(product.event) : null;
             this.seats = product.seats || 1;
+            this.description = product.description;
             products[product.id] = this;
         }
     }

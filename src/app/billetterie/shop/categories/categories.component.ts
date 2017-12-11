@@ -18,6 +18,7 @@ export class CategoriesComponent implements OnInit {
 
     categories: Set<Category> = new Set();
     lenght: number;
+    displayInfo = {};
 
     constructor(private api: BilleventApiService, private shopManager: ShopManagerService) {
     }
@@ -31,6 +32,7 @@ export class CategoriesComponent implements OnInit {
                 this.categories.forEach((cat) => {
                     cat.products.forEach((product) => {
                         this.order.productsCount[product.id] = this.order.countProducts(product);
+                        this.displayInfo[product.id] = false;
                     })
                 });
             },

@@ -26,7 +26,10 @@
             <div class="list-group-item" *ngFor="let product of cat.products">
                 <div class="row">
                     <div class="col-6">
-                        {{product.name}}
+                        {{product.name}} <span class="fa fa-info-circle info-button"
+                                               (click)="displayInfo[product.id] = !displayInfo[product.id]"
+                                                *ngIf="product.description"></span>
+                        <div *ngIf="displayInfo[product.id]" class="text-muted m-3 line-breaker">{{product.description}}</div>
                     </div>
                     <div class="col-2">
                         {{product.price_ttc | currency:'EUR':'symbol-narrow':'1.2-2'}}

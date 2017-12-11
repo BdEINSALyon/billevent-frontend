@@ -4,6 +4,15 @@
     border-radius: 0;
   }
 
+  .line-breaker {
+    white-space: pre-line;
+  }
+
+  .info-button{
+    margin-left: 0.5em;
+    cursor: pointer;
+  }
+
   #total {
     margin-top: 2em;
     font-weight: bold;
