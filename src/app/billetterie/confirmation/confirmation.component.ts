@@ -31,6 +31,10 @@ export class ConfirmationComponent implements OnInit {
     loadEvent() {
         const id: number = +this.route.snapshot.paramMap.get('id');
         const order: number = +this.route.snapshot.paramMap.get('order');
+        this.reload(id, order);
+    }
+
+    private reload(id: number, order: number) {
         this.billeventApi.getEvent(id).subscribe(
             (e) => {
                 this.event = e;
@@ -38,6 +42,11 @@ export class ConfirmationComponent implements OnInit {
                     (s) => {
                         this.state = s.status;
                         this.ticket = s.url;
+                        if(this.state !== 'success'){
+                            setTimeout(() => {
+                                this.reload(id, order);
+                            }, 2000)
+                        }
                     },
                     (error) => {
                         this.state = "failed"
@@ -49,5 +58,4 @@ export class ConfirmationComponent implements OnInit {
             }
         );
     }
-
 }
