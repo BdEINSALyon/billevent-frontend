@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import Order from "../../../../billevent/Order";
 import {ShopManagerService} from "../../shop-manager.service";
+import {BilletOption} from "../../../../billevent/Billet";
 
 @Component({
     selector: 'app-payment',
@@ -34,6 +35,17 @@ export class PaymentComponent implements OnInit {
                 alert("Impossible d'effectuer le paiement");
             }
         )
+    }
+
+    getTotalPrice(){
+        let options = 0;
+        let bos: BilletOption[] = [].concat.apply([], this.order.billets.map((b) => b.billet_options));
+        Array.from(bos).forEach((bo) => {
+            options = options + (bo.amount * bo.option.price_ttc);
+        }, 0);
+        let products = this.order.billets.filter((b) => b.product !== null).reduce((price, b) => price + b.product.price_ttc, 0);
+        console.log(options, products);
+        return products + options;
     }
 
 }
