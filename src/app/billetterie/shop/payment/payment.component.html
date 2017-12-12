@@ -3,9 +3,10 @@
     <div class="col-md-6 offset-md-3">
       <button class="btn btn-primary btn-lg btn-block" (click)="pay()">Payer {{getTotalPrice() | currency:'EUR':'symbol-narrow':'1.2-2'}} par Carte Bancaire</button>
       <div class="text-muted text-center m-3">
-        Vous allez être redirigé sur la plateforme de paiement de la banque BNP Paribas pour procéder au règlement de
+        <p>Vous allez être redirigé sur la plateforme de paiement de la banque BNP Paribas pour procéder au règlement de
         {{getTotalPrice() | currency:'EUR':'symbol-narrow':'1.2-2'}}. Le paiement se passe sur une page sécurisée à
-        l'aide du protocole SSL.
+        l'aide du protocole SSL.</p>
+        <p>En procédant au paiement, vous acceptez sans réserves les <a [href]="cgvUrl" target="_blank">conditions générales de vente</a></p>
       </div>
     </div>
   </div>

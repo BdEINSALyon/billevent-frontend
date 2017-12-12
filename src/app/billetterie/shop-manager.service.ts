@@ -152,8 +152,7 @@ export class ShopManagerService {
 
         return this.http.post(BilleventApiService.server + '/api/order/' + order.id + '/billet_options/', data).map(
             (o: any) => {
-                console.log(o);
-                order.state = o.status;
+                order.update(o);
                 return order;
             }
         )

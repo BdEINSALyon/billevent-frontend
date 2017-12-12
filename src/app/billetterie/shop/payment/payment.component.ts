@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import Order from "../../../../billevent/Order";
 import {ShopManagerService} from "../../shop-manager.service";
 import {BilletOption} from "../../../../billevent/Billet";
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'app-payment',
@@ -14,6 +15,8 @@ export class PaymentComponent implements OnInit {
 
     @Input()
     order: Order;
+
+    cgvUrl = environment.cgvUrl || "https://cgv.billetterie.bde-insa-lyon.fr";
 
     constructor(
         private shopManager: ShopManagerService
