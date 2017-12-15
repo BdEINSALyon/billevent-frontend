@@ -112,6 +112,15 @@ export class ShopManagerService {
         return `${protocol}//${host}/billetterie/${order.event.id}/payment/${order.id}`;
     }
 
+    applyCode(order: Order, code:string) {
+        return this.http.post(BilleventApiService.server + '/api/order/' + order.id + '/coupon/', {code}).map(
+            (response: any) => {
+                order.update(response);
+                return order;
+            }
+        )
+    }
+
     saveParticipants(order: Order): Observable<Order> {
         let billets: Map<number, Billet> = new Map();
         let participants: Set<Participant> = new Set();

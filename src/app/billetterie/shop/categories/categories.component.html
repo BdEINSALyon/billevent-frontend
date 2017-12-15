@@ -28,14 +28,17 @@
                     <div class="col-6">
                         {{product.name}} <span class="fa fa-info-circle info-button"
                                                (click)="displayInfo[product.id] = !displayInfo[product.id]"
-                                                *ngIf="product.description"></span>
-                        <div *ngIf="displayInfo[product.id]" class="text-muted m-3 line-breaker">{{product.description}}</div>
+                                               *ngIf="product.description"></span>
+                        <div *ngIf="displayInfo[product.id]" class="text-muted m-3 line-breaker">
+                            {{product.description}}
+                        </div>
                     </div>
                     <div class="col-2">
                         {{product.price_ttc | currency:'EUR':'symbol-narrow':'1.2-2'}}
                     </div>
                     <div class="col-2">
-                        <select class="form-control" (change)="updateCount(product, $event)" [ngModel]="order.productsCount[product.id]">
+                        <select class="form-control" (change)="updateCount(product, $event)"
+                                [ngModel]="order.productsCount[product.id]">
                             <option *ngFor="let i of [0,1,2,3,4,5,6,7,8]">{{i}}</option>
                         </select>
                     </div>
@@ -43,6 +46,17 @@
                         {{product.price_ttc * order.productsCount[product.id] | currency:'EUR':'symbol-narrow':'1.2-2'}}
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div id="code" class="row" *ngIf="!code">
+        <div class="col-3 offset-4 text-right">Code de réduction</div>
+        <div class="col-5 text-center">
+            <div class="input-group">
+                <input type="text" class="form-control" [(ngModel)]="newCode"/>
+                <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button">Appliquer</button>
+              </span>
             </div>
         </div>
     </div>

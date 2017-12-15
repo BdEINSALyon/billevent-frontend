@@ -6,6 +6,13 @@ import Category from "./Category";
 import PricingRule from "./PricingRule";
 import {ShopManagerService} from "../app/billetterie/shop-manager.service";
 
+export class Code{
+    id: number;
+    percentage: number;
+    amount: number;
+    description: string;
+}
+
 /**
  * Gestionaire d'une commande
  */
@@ -19,6 +26,7 @@ export default class Order {
     productsCount: Map<number, number> = new Map();
     categories: Set<Category>;
     state: number = 0;
+    coupon: Code;
 
 
     constructor(order: any) {
@@ -35,6 +43,7 @@ export default class Order {
         this.event = new Event(order['event']);
         this.state = order['status'] || 0;
         this.billets = order['billets'] ? order['billets'].map((b) => new Billet(b)) : [];
+        this.coupon = order['coupon']
     }
 
     /**

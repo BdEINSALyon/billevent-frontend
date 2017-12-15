@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import Category from '../../../../billevent/Category';
 import {BilleventApiService} from "../../../billevent-api.service";
-import Order from "../../../../billevent/Order";
+import Order, {Code} from "../../../../billevent/Order";
 import Product from "../../../../billevent/Product";
 import {ShopManagerService} from "../../shop-manager.service";
 
@@ -19,6 +19,7 @@ export class CategoriesComponent implements OnInit {
     categories: Set<Category> = new Set();
     lenght: number;
     displayInfo = {};
+    code: Code;
 
     constructor(private api: BilleventApiService, private shopManager: ShopManagerService) {
     }
