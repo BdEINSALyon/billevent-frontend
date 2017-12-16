@@ -3,6 +3,7 @@ import Order from "../../../../billevent/Order";
 import {ShopManagerService} from "../../shop-manager.service";
 import {BilletOption} from "../../../../billevent/Billet";
 import {environment} from "../../../../environments/environment";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-payment',
@@ -18,9 +19,8 @@ export class PaymentComponent implements OnInit {
 
     cgvUrl = environment.cgvUrl || "https://cgv.billetterie.bde-insa-lyon.fr";
 
-    constructor(
-        private shopManager: ShopManagerService
-    ) {
+    constructor(private shopManager: ShopManagerService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -28,27 +28,31 @@ export class PaymentComponent implements OnInit {
 
     }
 
-    pay(){
+    pay() {
         this.shopManager.pay(this.order).subscribe(
             (link) => {
-                window.location.href = link.toString()
+                if (link.toString().length > 0)
+                    window.location.href = link.toString()
+                else {
+                    this.router.navigate(['billetterie', this.order.event.id, 'payment', this.order.id])
+                }
             },
             (err) => {
-                console.log(err);
-                alert("Impossible d'effectuer le paiement");
+                if (err.status == 201)
+                    this.router.navigate(['billetterie', this.order.event.id, 'payment', this.order.id]);
+                else
+                    alert("Impossible d'effectuer le paiement");
             }
         )
     }
 
-    getTotalPrice(){
+    getTotalPrice() {
         let options = 0;
         let bos: BilletOption[] = [].concat.apply([], this.order.billets.map((b) => b.billet_options));
         Array.from(bos).forEach((bo) => {
             options = options + (bo.amount * bo.option.price_ttc);
         }, 0);
-        let products = this.order.billets.filter((b) => b.product !== null).reduce((price, b) => price + b.product.price_ttc, 0);
-        console.log(options, products);
-        return products + options;
+        return this.order.getPriceWithCoupon(options);
     }
 
 }

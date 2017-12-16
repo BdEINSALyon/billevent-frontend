@@ -34,6 +34,12 @@ export class ShopManagerService {
         )
     }
 
+    applyCoupon(order: Order, code: string) : Observable<Order> {
+        return this.http.post(BilleventApiService.server + '/api/order/' + order.id + '/coupon/', {code}).map(
+            (o) => order.update(o)
+        )
+    }
+
     register(order: Order) : Observable<Order> {
         return this.http.post(BilleventApiService.server + '/api/events/' + order.event.id + '/order/', {
             billets: order.billets.map((billet) => {

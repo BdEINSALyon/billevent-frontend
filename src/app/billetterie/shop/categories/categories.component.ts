@@ -20,6 +20,8 @@ export class CategoriesComponent implements OnInit {
     lenght: number;
     displayInfo = {};
     code: Code;
+    applyingCode = false;
+    newCode:string = "";
 
     constructor(private api: BilleventApiService, private shopManager: ShopManagerService) {
     }
@@ -55,7 +57,7 @@ export class CategoriesComponent implements OnInit {
     }
 
     getTotalPrice() {
-        return this.order.getPriceTTC();
+        return this.order.getPriceWithCoupon();
     }
 
     validateOrder(){
@@ -84,4 +86,33 @@ export class CategoriesComponent implements OnInit {
         );
     }
 
+    applyCoupon() {
+        if(!this.applyingCode) {
+            this.applyingCode = true;
+            this.shopManager.applyCoupon(this.order, this.newCode).subscribe(
+                (order) => {
+                    this.code = order.coupon;
+                    this.applyingCode = false;
+                }, () => {
+                    this.applyingCode = false;
+                    alert('Le code demandé n\'existe pas ou n\'est pas valable');
+                }
+            );
+        }
+    }
+
+    removeCoupon() {
+        if(!this.applyingCode) {
+            this.applyingCode = true;
+            this.shopManager.applyCoupon(this.order, '').subscribe(
+                (order) => {
+                    this.code = order.coupon;
+                    this.applyingCode = false;
+                }, () => {
+                    this.applyingCode = false;
+                }
+            );
+        }
+
+    }
 }

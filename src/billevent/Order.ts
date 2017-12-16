@@ -37,13 +37,14 @@ export default class Order {
 
     }
 
-    update(order: any) {
+    update(order: any) : Order {
         this.id = parseInt(order['id']) || -1;
         this.client = order['client'] ? new Client(order['client']) : null;
         this.event = new Event(order['event']);
         this.state = order['status'] || 0;
         this.billets = order['billets'] ? order['billets'].map((b) => new Billet(b)) : [];
-        this.coupon = order['coupon']
+        this.coupon = order['coupon'];
+        return this;
     }
 
     /**
@@ -108,6 +109,13 @@ export default class Order {
             throw new Error("This order is already saved!");
         }
         this.event = event;
+    }
+
+    getPriceWithCoupon(amountToAdd = 0): number {
+        let price = this.getPriceTTC() + amountToAdd;
+        let coupon = this.coupon;
+        let withCoupon = coupon ? price * (1-coupon.percentage) - coupon.amount : price;
+        return withCoupon < 0 ? 0 : withCoupon;
     }
 
     getPriceTTC() {

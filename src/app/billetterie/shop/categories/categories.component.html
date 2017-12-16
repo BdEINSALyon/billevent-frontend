@@ -49,15 +49,21 @@
             </div>
         </div>
     </div>
-    <div id="code" class="row" *ngIf="!code">
+    <div id="code" class="row" *ngIf="!order.coupon">
         <div class="col-3 offset-4 text-right">Code de réduction</div>
         <div class="col-5 text-center">
             <div class="input-group">
                 <input type="text" class="form-control" [(ngModel)]="newCode"/>
                 <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Appliquer</button>
+                <button class="btn btn-secondary" type="button" [class.disabled]="applyingCode" (click)="applyCoupon()">Appliquer</button>
               </span>
             </div>
+        </div>
+    </div>
+    <div id="code-display" class="row" *ngIf="order.coupon">
+        <div class="col-8 offset-4 text-right">
+            <div class="pull-left">Réduction "{{order.coupon.description}}" appliquée</div>
+            <div class="btn btn-danger pull-right" [class.disabled]="applyingCode" (click)="removeCoupon()"><i class="fa fa-trash"></i></div>
         </div>
     </div>
     <div id="total" class="row">

@@ -44,9 +44,7 @@ export class OptionsComponent implements OnInit {
         Array.from(this.billet_options).forEach((bo) => {
             options = options + (bo.amount * bo.option.price_ttc);
         }, 0);
-        let products = this.order.billets.reduce((price, b) => price + b.product.price_ttc, 0);
-        console.log(options, products);
-        return products + options;
+        return this.order.getPriceWithCoupon(options);
     }
 
     validateOptions(){
