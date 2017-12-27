@@ -21,6 +21,7 @@ export default class Product {
     event: Event;
     seats: number;
     description: string;
+    how_many_left: number;
 
     constructor(product) {
         if (products.hasOwnProperty(product.id)) {
@@ -41,6 +42,7 @@ export default class Product {
             this.event = product.event ? new Event(product.event) : null;
             this.seats = product.seats || 1;
             this.description = product.description;
+            this.how_many_left = product.how_many_left;
             products[product.id] = this;
         }
     }
