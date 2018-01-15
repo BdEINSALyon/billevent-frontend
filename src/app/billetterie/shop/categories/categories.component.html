@@ -29,16 +29,16 @@
                         {{product.name}} <span class="fa fa-info-circle info-button"
                                                (click)="displayInfo[product.id] = !displayInfo[product.id]"
                                                *ngIf="product.description"></span>
-                        <span class="badge badge-danger" *ngIf="product.how_many_left - product.seats + 1 <= 0">Epuisé</span>
+                        <span class="badge badge-danger" *ngIf="isDisabled(product)">Indisponible</span>
 
                     </div>
                     <div class="col-2">
                         {{product.price_ttc | currency:'EUR':'symbol-narrow':'1.2-2'}}
                     </div>
                     <div class="col-2">
-                        <select class="form-control" (change)="updateCount(product, $event)" [disabled]="product.how_many_left - product.seats + 1 <= 0"
+                        <select class="form-control" (change)="updateCount(product, $event)" [disabled]="isDisabled(product)"
                                 [ngModel]="order.productsCount[product.id]">
-                            <option *ngFor="let i of [0,1,2,3,4,5,6,7,8]">{{i}}</option>
+                            <option *ngFor="let i of seatsChoices(product)">{{i}}</option>
                         </select>
                     </div>
                     <div class="col-2 text-center">

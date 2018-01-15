@@ -4,6 +4,7 @@ import {BilleventApiService} from "../../../billevent-api.service";
 import Order, {Code} from "../../../../billevent/Order";
 import Product from "../../../../billevent/Product";
 import {ShopManagerService} from "../../shop-manager.service";
+import {Invitation} from "../../../../billevent/Invitation";
 
 @Component({
     selector: 'app-categories',
@@ -21,13 +22,19 @@ export class CategoriesComponent implements OnInit {
     displayInfo = {};
     code: Code;
     applyingCode = false;
-    newCode:string = "";
+    newCode: string = "";
+    private invitation: Invitation;
 
     constructor(private api: BilleventApiService, private shopManager: ShopManagerService) {
     }
 
     ngOnInit() {
         window.scrollTo(0, 0);
+        this.shopManager.getInvitation(this.order.event).subscribe(
+            (invitation) => {
+                this.invitation = invitation;
+            }
+        );
         this.api.getCategories(this.order.event.id).subscribe(
             (categories) => {
                 this.categories = new Set(categories);
@@ -49,7 +56,8 @@ export class CategoriesComponent implements OnInit {
         const count = parseInt((<HTMLSelectElement>$event.target).value);
         let countBefore = this.order.productsCount[product.id];
         this.order.productsCount[product.id] = count;
-        this.order.updateBillet(this.shopManager).then(()=>{}, (error) => {
+        this.order.updateBillet(this.shopManager).then(() => {
+        }, (error) => {
             this.order.productsCount[product.id] = countBefore;
             (<HTMLSelectElement>$event.target).value = countBefore.toString();
             alert(error);
@@ -60,11 +68,11 @@ export class CategoriesComponent implements OnInit {
         return this.order.getPriceWithCoupon();
     }
 
-    validateOrder(){
+    validateOrder() {
 
         this.order.updateBillet(this.shopManager).then(
             () => {
-                if(this.order.billets.length <= 0) return;
+                if (this.order.billets.length <= 0) return;
                 this.shopManager.register(this.order).subscribe(
                     (order) => {
                         this.order = order;
@@ -77,7 +85,7 @@ export class CategoriesComponent implements OnInit {
                 )
             }, (error) => {
                 console.error(error);
-                if(typeof error === 'string')
+                if (typeof error === 'string')
                     alert(error);
                 else
                     alert('Une erreur s\'est produite, la commande ne peut pas être enregistrée.');
@@ -87,7 +95,7 @@ export class CategoriesComponent implements OnInit {
     }
 
     applyCoupon() {
-        if(!this.applyingCode) {
+        if (!this.applyingCode) {
             this.applyingCode = true;
             this.shopManager.applyCoupon(this.order, this.newCode).subscribe(
                 (order) => {
@@ -102,7 +110,7 @@ export class CategoriesComponent implements OnInit {
     }
 
     removeCoupon() {
-        if(!this.applyingCode) {
+        if (!this.applyingCode) {
             this.applyingCode = true;
             this.shopManager.applyCoupon(this.order, '').subscribe(
                 (order) => {
@@ -114,5 +122,42 @@ export class CategoriesComponent implements OnInit {
             );
         }
 
+    }
+
+    isDisabled(product: Product): boolean {
+        return this.max_seats(product) <= 0;
+    }
+
+    max_seats(product: Product): number {
+        let grants = 0;
+        let left_seats = Math.floor(product.how_many_left / product.seats);
+        if (this.invitation && this.invitation.grants) {
+            this.invitation.grants.forEach((grant) => {
+                if (grant.product_id === product.id) grants += grant.amount;
+            });
+            let used_on_other_products = 0;
+            this.order.billets.forEach((billet) => {
+                if (billet.product.id != product.id) {
+                    used_on_other_products += billet.product.seats;
+                }
+            });
+            let invitation_seats = this.invitation.seats - this.invitation.bought_seats - used_on_other_products;
+            invitation_seats /= product.seats;
+            invitation_seats = Math.floor(invitation_seats);
+            left_seats = Math.min(invitation_seats, left_seats);
+        }
+        if (product.selling_mode == 'I') {
+            return Math.min(grants, left_seats);
+        } else if (product.selling_mode == 'L') {
+            return 0;
+        } else {
+            return Math.min(left_seats, 15);
+        }
+    }
+
+    seatsChoices(product: Product): number[] {
+        let max = Math.floor(this.max_seats(product));
+        if (max <= 0) return [0];
+        return Array.from(Array(max + 1).keys());
     }
 }
