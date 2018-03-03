@@ -7,7 +7,7 @@ build-master:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+    - docker build --build-arg environnement=prod --pull -t "$CI_REGISTRY_IMAGE" .
     - docker push "$CI_REGISTRY_IMAGE"
   only:
     - master
@@ -17,7 +17,7 @@ build:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+    - docker build --build-arg environnement=preprod --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
   except:
     - master
@@ -26,7 +26,14 @@ deploy:
   stage: deploy
   image: cdrx/rancher-gitlab-deploy
   script:
-    - upgrade --new-image "$CI_REGISTRY_IMAGE" --start-before-stopping --stack billevent --service frontend
+    - upgrade --environment "Production" --new-image "$CI_REGISTRY_IMAGE" --start-before-stopping --stack billevent --service billevent-frontend
   only:
     - master
 
+deploy-preprod:
+  stage: deploy
+  image: cdrx/rancher-gitlab-deploy
+  script:
+    - upgrade --environment "Production" --new-image "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" --start-before-stopping --stack billevent-preprod --service billevent-preprod-frontend
+  only:
+    - dev
