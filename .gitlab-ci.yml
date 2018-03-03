@@ -22,11 +22,18 @@ build:
   except:
     - master
 
+deploy-test:
+  stage: deploy
+  image: cdrx/rancher-gitlab-deploy
+  script:
+    - upgrade --environment "Production" --new-image "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" --start-before-stopping --stack billevent-preprod --service billevent-preprod-frontend
+  only:
+    - dev
+
 deploy:
   stage: deploy
   image: cdrx/rancher-gitlab-deploy
   script:
-    - upgrade --new-image "$CI_REGISTRY_IMAGE" --start-before-stopping --stack billevent --service frontend
+    - upgrade --environment "Production" --new-image "$CI_REGISTRY_IMAGE" --start-before-stopping --stack billevent --service billevent-frontend
   only:
     - master
-
