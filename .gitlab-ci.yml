@@ -37,3 +37,20 @@ deploy-preprod:
     - upgrade --environment "Production" --new-image "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" --start-before-stopping --stack billevent-preprod --service billevent-preprod-frontend
   only:
     - dev
+    
+sast:
+  variables:
+    DOCKER_DRIVER: overlay2
+  allow_failure: true
+  services:
+    - docker:dind
+  script:
+    - export SAST_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
+    - docker run 
+        --env SAST_CONFIDENCE_LEVEL="${SAST_CONFIDENCE_LEVEL:-3}" 
+        --env SAST_DISABLE_REMOTE_CHECKS="${SAST_DISABLE_REMOTE_CHECKS:-false}" 
+        --volume "$PWD:/code" 
+        --volume /var/run/docker.sock:/var/run/docker.sock 
+        "registry.gitlab.com/gitlab-org/security-products/sast:$SAST_VERSION" /app/bin/run /code
+  artifacts:
+    paths: [gl-sast-report.json]
