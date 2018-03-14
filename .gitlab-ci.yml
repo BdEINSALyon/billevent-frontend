@@ -54,3 +54,5 @@ sast:
         "registry.gitlab.com/gitlab-org/security-products/sast:$SAST_VERSION" /app/bin/run /code
   artifacts:
     paths: [gl-sast-report.json]
+  only:
+    - dev
