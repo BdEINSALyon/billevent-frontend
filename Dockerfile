@@ -2,11 +2,10 @@ FROM node:latest AS build
 
 WORKDIR /app
 COPY package.json package.json
-COPY package-lock.json package-lock.json
 RUN npm install
 COPY *.json /app/
 COPY src src
-RUN npm run build -- --prod --build-optimizer --env=prod
+RUN npm run build -- --prod --build-optimizer --env=prod -vc=true
 
 FROM nginx:alpine
 
