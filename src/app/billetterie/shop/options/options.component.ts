@@ -16,6 +16,7 @@ export class OptionsComponent implements OnInit {
 
     billet_options: Set<BilletOption> = new Set();
     globalOptions = new Set();
+    errors: string;
 
     constructor(
         private shopManager: ShopManagerService
@@ -50,7 +51,7 @@ export class OptionsComponent implements OnInit {
     validateOptions(){
         this.shopManager.saveOptions(this.order, this.billet_options).subscribe(
             () => {},
-            (err) => {console.error(err)}
+            (err) => {console.error(err);this.errors=err.error.error}
         )
     }
 }
