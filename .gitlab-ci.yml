@@ -36,7 +36,7 @@ deploy-preprod:
   script:
     - upgrade --environment "Production" --new-image "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" --start-before-stopping --stack billevent-preprod --service billevent-preprod-frontend
   only:
-    - dev
+    - dev-gala
     
 sast:
   variables:
