@@ -18,6 +18,7 @@ export class PaymentComponent implements OnInit {
     order: Order;
 
     cgvUrl = environment.cgvUrl || "https://cgv.billetterie.bde-insa-lyon.fr";
+    alertShown=false;
 
     constructor(private shopManager: ShopManagerService,
                 private router: Router) {

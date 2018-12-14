@@ -5,7 +5,9 @@
 
 export const environment = {
   production: false,
+  //apiServer: "https://0ee2b214.ngrok.io",
     apiServer: "http://localhost:8000",
+    //jwtDomains: ['0ee2b214.ngrok.io'],
     jwtDomains: ['localhost:8000'],
     cgvUrl: "https://cgv.billetterie.bde-insa-lyon.fr"
 };

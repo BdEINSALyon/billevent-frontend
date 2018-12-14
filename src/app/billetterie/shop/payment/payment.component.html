@@ -1,8 +1,15 @@
 <div id="payment">
   <div class="row mt-4">
-    <div class="col-md-6 offset-md-3">
-      <button class="btn btn-primary btn-lg btn-block" *ngIf="getTotalPrice() > 0" (click)="pay()">Payer {{getTotalPrice() | currency:'EUR':'symbol-narrow':'1.2-2'}} par Carte Bancaire</button>
-      <button class="btn btn-primary btn-lg btn-block" *ngIf="getTotalPrice() == 0" (click)="pay()">Valider la commande gratuite</button>
+    <div class="col-md-8 offset-md-2">
+      <div *ngIf="!alertShown" class="col-md-10 offset-md-1">
+        <button class="btn btn-primary btn-lg btn-block" *ngIf="getTotalPrice() > 0" (click)="alertShown=true;">Payer {{getTotalPrice() | currency:'EUR':'symbol-narrow':'1.2-2'}} par Carte Bancaire</button>
+        <button class="btn btn-primary btn-lg btn-block" *ngIf="getTotalPrice() == 0" (click)="alertShown=true;">Valider la commande gratuite</button>
+      </div>
+      <div class="alert-danger alert" role="alert" *ngIf="alertShown">
+        Gardez bien précieusement la référence de la transaction (imprimez le reçu du paiement)!
+        <button class="btn btn-primary btn-lg btn-block" *ngIf="getTotalPrice() > 0" (click)="pay()">Payer {{getTotalPrice() | currency:'EUR':'symbol-narrow':'1.2-2'}} par Carte Bancaire</button>
+        <button class="btn btn-primary btn-lg btn-block" *ngIf="getTotalPrice() == 0" (click)="pay()">Valider la commande gratuite</button>
+      </div>
       <div class="text-muted text-center m-3">
         <p *ngIf="getTotalPrice() > 0">Vous allez être redirigé sur la plateforme de paiement de la banque BNP Paribas pour procéder au règlement de
         {{getTotalPrice() | currency:'EUR':'symbol-narrow':'1.2-2'}}. Le paiement se passe sur une page sécurisée à
