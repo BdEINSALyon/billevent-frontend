@@ -23,14 +23,14 @@
                                        [(ngModel)]="participant.last_name">
                             </div>
                             <div class="form-group col-md-6">
-                                <label>Email</label>
-                                <input type="email" class="form-control" placeholder="Email"
+                                <label>Email <span class="text-warning">(requis)</span></label>
+                                <input type="email" class="form-control" placeholder="Email" required="required"
                                        [name]="'email_'+billetNum+'_'+i" [disabled]="participant.id > 0"
                                        [(ngModel)]="participant.email">
                             </div>
                             <div class="form-group col-md-6">
-                                <label>Téléphone</label>
-                                <input type="tel" class="form-control" placeholder="Téléphone"
+                                <label>Téléphone <span class="text-warning">(requis)</span></label>
+                                <input type="tel" class="form-control" placeholder="Téléphone" required="required"
                                        [name]="'phone_'+billetNum+'_'+i" [disabled]="participant.id > 0"
                                        [(ngModel)]="participant.phone">
                             </div>
