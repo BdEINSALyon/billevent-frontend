@@ -29,7 +29,8 @@
                         {{product.name}} <span class="fa fa-info-circle info-button"
                                                (click)="displayInfo[product.id] = !displayInfo[product.id]"
                                                *ngIf="product.description"></span>
-                        <span class="badge badge-danger" *ngIf="isDisabled(product)">Indisponible</span>
+                        <span class="badge badge-danger" *ngIf="isDisabled(product)">Indisponible</span><br>
+                        <span class="badge badge-info" *ngIf="!isDisabled(product)">{{product.how_many_left}} restant(s)</span>
 
                     </div>
                     <div class="col-2">
