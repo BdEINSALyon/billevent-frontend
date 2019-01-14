@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-    apiServer: "https://api.billetterie.test.bde-insa-lyon.fr",
-    jwtDomains: ['api.billetterie.test.bde-insa-lyon.fr'],
+    apiServer: "https://api.billetterie.bde-insa-lyon.fr",
+    jwtDomains: ['api.billetterie.bde-insa-lyon.fr'],
     cgvUrl: "https://cgv.billetterie.bde-insa-lyon.fr"
 };
